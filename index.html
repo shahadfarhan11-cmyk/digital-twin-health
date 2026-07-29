@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Digital Twin Health</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+:root{
+--primary:#0b3b91;
+--secondary:#25aae1;
+--success:#05CD99;
+--danger:#ff4d4d;
+--warning:#ffb547;
+--bg:#f4f8ff;
+--card:#ffffff;
+--text:#10244c;
+--gray:#7d8ba7;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+background:var(--bg);
+overflow-x:hidden;
+color:var(--text);
+transition:.3s;
+}
+
+/* LOGIN */
+
+#login-page{
+min-height:100vh;
+}
+
+.auth-container{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:30px;
+background:
+linear-gradient(rgba(6,22,53,.85),rgba(6,22,53,.85)),
+url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+}
+
+.auth-box{
+width:100%;
+max-width:470px;
+background:rgba(255,255,255,.97);
+padding:40px;
+border-radius:35px;
+backdrop-filter:blur(10px);
+box-shadow:0 20px 50px rgba(0,0,0,.2);
+display:none;
+animation:fade .5s ease;
+}
+
+.auth-box.active{
+display:block;
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.logo{
+text-align:center;
+margin-bottom:30px;
+}
+
+.logo-title{
+font-size:42px;
+color:var(--primary);
+font-weight:800;
+margin-bottom:15px;
+}
+
+.logo p{
+color:var(--gray);
+line-height:1.8;
+}
+
+.input-group{
+margin-bottom:18px;
+}
+
+.input-group label{
+display:block;
+margin-bottom:8px;
+font-weight:700;
+}
+
+.input-group input,
+.input-group select{
+width:100%;
+padding:15px;
+border-radius:15px;
+border:1px solid #dce5f5;
+outline:none;
+background:#f9fbff;
+font-size:15px;
+transition:.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus{
+border-color:var(--secondary);
+box-shadow:0 0 0 4px rgba(37,170,225,.15);
+}
+
+.btn-login{
+width:100%;
+padding:15px;
+border:none;
+border-radius:15px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+.btn-login:hover{
+transform:translateY(-3px);
+}
+
+.links{
+margin-top:20px;
+text-align:center;
+}
+
+.links p{
+margin-top:12px;
+color:var(--primary);
+cursor:pointer;
+font-weight:700;
+}
+
+.error{
+display:none;
+background:#ffe2e2;
+color:#c00000;
+padding:14px;
+border-radius:14px;
+margin-bottom:18px;
+font-size:14px;
+}
+
+/* APP */
+
+#app-interface{
+display:none;
+min-height:100vh;
+}
+
+.sidebar{
+width:95px;
+background:white;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:25px 0;
+position:fixed;
+height:100%;
+border-left:1px solid #edf2ff;
+z-index:100;
+}
+
+.sidebar-item{
+width:55px;
+height:55px;
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:18px;
+margin-bottom:20px;
+color:#94a3b8;
+font-size:20px;
+cursor:pointer;
+transition:.3s;
+}
+
+.sidebar-item:hover{
+transform:translateY(-4px);
+}
+
+.sidebar-item.active{
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+}
+
+.main-content{
+flex:1;
+padding:40px;
+margin-right:95px;
+}
+
+.dashboard-section{
+display:none;
+animation:fade .4s ease;
+}
+
+.dashboard-section.active{
+display:block;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:25px;
+margin-bottom:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.03);
+animation:up .5s ease;
+}
+
+@keyframes up{
+
+from{
+opacity:0;
+transform:translateY(25px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.stat-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.services-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;
+}
+
+.service-box{
+background:white;
+padding:25px;
+border-radius:20px;
+text-align:center;
+border:1px solid #edf2ff;
+transition:.3s;
+cursor:pointer;
+}
+
+.service-box:hover{
+transform:translateY(-6px);
+border-color:var(--primary);
+}
+
+.service-box i{
+font-size:32px;
+margin-bottom:15px;
+display:block;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th{
+padding:12px;
+color:#94a3b8;
+border-bottom:1px solid #edf2ff;
+text-align:right;
+}
+
+td{
+padding:15px 12px;
+border-bottom:1px solid #edf2ff;
+font-weight:600;
+}
+
+.health-circle{
+width:170px;
+height:170px;
+border-radius:50%;
+background:conic-gradient(
+var(--success) 0% 78%,
+#e9edf7 78% 100%
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:35px;
+font-weight:800;
+color:var(--success);
+margin:auto;
+}
+
+.notification{
+padding:18px;
+border-radius:18px;
+margin-bottom:15px;
+font-weight:700;
+}
+
+.notification.warning{
+background:#fff7e6;
+color:#b76e00;
+}
+
+.notification.success{
+background:#ecfff4;
+color:#059669;
+}
+
+/* DARK MODE */
+
+.dark{
+background:#0f172a;
+color:white;
+}
+
+.dark .card,
+.dark .sidebar,
+.dark .auth-box,
+.dark .service-box{
+background:#1e293b;
+color:white;
+}
+
+.dark input,
+.dark select{
+background:#0f172a;
+color:white;
+border-color:#334155;
+}
+
+.dark td,
+.dark th,
+.dark p{
+color:#e2e8f0;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.sidebar{
+width:100%;
+height:80px;
+bottom:0;
+top:auto;
+flex-direction:row;
+justify-content:center;
+}
+
+.main-content{
+margin-right:0;
+margin-bottom:90px;
+padding:20px;
+}
+
+.logo-title{
+font-size:30px;
+}
+
+.stat-grid,
+.services-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="login-page">
+
+<div class="auth-container">
+
+<!-- REGISTER -->
+
+<div class="auth-box active" id="registerBox">
+
+<div class="logo">
+
+<h1 class="logo-title">
+Digital Twin Health
+</h1>
+
+<p>
+إنشاء حساب جديد للنظام الصحي الذكي
+</p>
+
+</div>
+
+<div class="error" id="registerError"></div>
+
+<div class="input-group">
+<label>الاسم الكامل</label>
+<input type="text" id="regName">
+</div>
+
+<div class="input-group">
+<label>البريد الإلكتروني</label>
+<input type="email" id="regEmail">
+</div>
+
+<div class="input-group">
+<label>كلمة المرور</label>
+<input type="password" id="regPassword">
+</div>
+
+<div class="input-group">
+<label>تأكيد كلمة المرور</label>
+<input type="password" id="regConfirm">
+</div>
+
+<div class="input-group">
+
+<label>
+نوع الحساب
+</label>
+
+<select id="regRole">
+
+<option value="patient">
+مريض
+</option>
+
+<option value="doctor">
+طبيب
+</option>
+
+<option value="admin">
+مدير النظام
+</option>
+
+</select>
+
+</div>
+
+<button class="btn-login" onclick="registerUser()">
+إنشاء حساب
+</button>
+
+<div class="links">
+
+<p onclick="showBox('loginBox')">
+لديك حساب؟ تسجيل الدخول
+</p>
+
+</div>
+
+</div>
+
+<!-- LOGIN -->
+
+<div class="auth-box" id="loginBox">
+
+<div class="logo">
+
+<h1 class="logo-title">
+تسجيل الدخول
+</h1>
+
+<p>
+مرحباً بك في منصة Digital Twin Health
+</p>
+
+</div>
+
+<div class="error" id="loginError"></div>
+
+<div class="input-group">
+<label>البريد الإلكتروني</label>
+<input type="email" id="loginEmail">
+</div>
+
+<div class="input-group">
+<label>كلمة المرور</label>
+<input type="password" id="loginPassword">
+</div>
+
+<button class="btn-login" onclick="loginUser()">
+دخول النظام
+</button>
+
+<div class="links">
+
+<p onclick="showBox('forgotBox')">
+نسيت كلمة المرور؟
+</p>
+
+<p onclick="showBox('registerBox')">
+إنشاء حساب جديد
+</p>
+
+</div>
+
+</div>
+
+<!-- FORGOT -->
+
+<div class="auth-box" id="forgotBox">
+
+<div class="logo">
+
+<h1 class="logo-title">
+استعادة كلمة المرور
+</h1>
+
+<p>
+أدخل بريدك الإلكتروني
+</p>
+
+</div>
+
+<div class="input-group">
+<label>البريد الإلكتروني</label>
+<input type="email" id="forgotEmail">
+</div>
+
+<button class="btn-login" onclick="forgotPassword()">
+إرسال الرابط
+</button>
+
+<div class="links">
+
+<p onclick="showBox('loginBox')">
+العودة لتسجيل الدخول
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- APP -->
+
+<div id="app-interface">
+
+<div class="sidebar">
+
+<div class="sidebar-item active"
+id="btn-p"
+onclick="show('patient')">
+
+<i class="fas fa-user"></i>
+
+</div>
+
+<div class="sidebar-item"
+id="btn-d"
+onclick="show('doctor')">
+
+<i class="fas fa-user-md"></i>
+
+</div>
+
+<div class="sidebar-item"
+id="btn-a"
+onclick="show('admin')">
+
+<i class="fas fa-chart-line"></i>
+
+</div>
+
+<div class="sidebar-item"
+onclick="toggleDarkMode()">
+
+<i class="fas fa-moon"></i>
+
+</div>
+
+<div class="sidebar-item"
+style="margin-top:auto;color:red"
+onclick="logout()">
+
+<i class="fas fa-sign-out-alt"></i>
+
+</div>
+
+</div>
+
+<div class="main-content">
+
+<!-- PATIENT -->
+
+<div id="section-patient"
+class="dashboard-section active">
+
+<div class="card"
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:20px;
+">
+
+<div>
+
+<h2 id="outName">
+مرحباً بك
+</h2>
+
+<p id="outDetails"
+style="margin-top:5px;color:#7d8ba7;">
+</p>
+
+<p id="roleText"
+style="
+margin-top:10px;
+font-weight:700;
+color:#25aae1;
+">
+</p>
+
+</div>
+
+<button class="btn-login"
+style="width:auto;padding:12px 25px;">
+
+تعديل الملف الشخصي
+
+</button>
+<div class="card">
+
+<h3 style="margin-bottom:20px;">
+إرسال البيانات للطبيب
+</h3>
+
+<div class="input-group">
+<label>العمر</label>
+<input type="number" id="patientAge">
+</div>
+
+<div class="input-group">
+<label>الوزن</label>
+<input type="text" id="patientWeight">
+</div>
+
+<div class="input-group">
+<label>ضغط الدم</label>
+<input type="text" id="patientPressure">
+</div>
+
+<div class="input-group">
+<label>مستوى السكر</label>
+<input type="text" id="patientSugar">
+</div>
+
+<div class="input-group">
+<label>الأعراض</label>
+
+<input type="text"
+id="patientSymptoms">
+
+</div>
+
+<button class="btn-login"
+onclick="sendToDoctor()">
+
+إرسال البيانات
+
+</button>
+
+</div>
+</div>
+
+<div class="card">
+
+<h3 style="margin-bottom:20px;">
+الإشعارات الطبية
+</h3>
+
+<div class="notification warning">
+
+<i class="fas fa-bell"></i>
+
+موعدك القادم بعد يومين مع طبيب القلب
+
+</div>
+
+<div class="notification success">
+
+<i class="fas fa-check-circle"></i>
+
+نتائج الفحوصات الأخيرة طبيعية
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3 style="margin-bottom:20px;">
+تحليل الحالة الصحية
+</h3>
+
+<div style="
+display:flex;
+gap:30px;
+align-items:center;
+flex-wrap:wrap;
+">
+
+<div class="health-circle">
+78%
+</div>
+
+<div style="flex:1;min-width:250px;">
+
+<p style="margin-bottom:10px;">
+النشاط البدني
+</p>
+
+<div style="
+height:12px;
+background:#edf2ff;
+border-radius:30px;
+overflow:hidden;
+margin-bottom:20px;
+">
+
+<div style="
+width:80%;
+height:100%;
+background:#05CD99;
+">
+</div>
+
+</div>
+
+<p style="margin-bottom:10px;">
+جودة النوم
+</p>
+
+<div style="
+height:12px;
+background:#edf2ff;
+border-radius:30px;
+overflow:hidden;
+margin-bottom:20px;
+">
+
+<div style="
+width:65%;
+height:100%;
+background:#ffb547;
+">
+</div>
+
+</div>
+
+<p style="margin-bottom:10px;">
+النظام الغذائي
+</p>
+
+<div style="
+height:12px;
+background:#edf2ff;
+border-radius:30px;
+overflow:hidden;
+">
+
+<div style="
+width:90%;
+height:100%;
+background:#4318FF;
+">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="stat-grid">
+
+<div class="card" style="text-align:center;">
+
+<i class="fas fa-heart"
+style="font-size:35px;color:#ff4d4d;"></i>
+
+<h2 style="margin:15px 0;">
+74
+</h2>
+
+<p>
+نبض القلب
+</p>
+
+</div>
+
+<div class="card" style="text-align:center;">
+
+<i class="fas fa-tint"
+style="font-size:35px;color:#0b3b91;"></i>
+
+<h2 style="margin:15px 0;">
+120/80
+</h2>
+
+<p>
+ضغط الدم
+</p>
+
+</div>
+
+<div class="card" style="text-align:center;">
+
+<i class="fas fa-lungs"
+style="font-size:35px;color:#05CD99;"></i>
+
+<h2 style="margin:15px 0;">
+98%
+</h2>
+
+<p>
+الأكسجين
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3 style="margin-bottom:20px;">
+AI Prediction
+</h3>
+
+<p style="
+font-size:18px;
+line-height:2;
+font-weight:700;
+color:#05CD99;
+">
+
+بناءً على بياناتك الحالية،
+يتوقع النظام تحسن حالتك الصحية خلال 30 يوم.
+
+</p>
+
+</div>
+
+<h3 style="margin-bottom:20px;">
+الخدمات الطبية
+</h3>
+
+<div class="services-grid">
+
+<div class="service-box">
+
+<i class="fas fa-file-medical-alt"
+style="color:#0b3b91;"></i>
+
+<b>
+التقارير
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-x-ray"
+style="color:#05CD99;"></i>
+
+<b>
+الأشعة
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-microscope"
+style="color:#ff4d4d;"></i>
+
+<b>
+الفحوصات
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-calendar-check"
+style="color:#4318FF;"></i>
+
+<b>
+المواعيد
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- DOCTOR -->
+
+<div id="section-doctor"
+class="dashboard-section">
+
+<h2 style="margin-bottom:20px;">
+جدول مواعيد الأطباء
+</h2>
+
+<div class="card">
+
+<table>
+
+<tr>
+<th>الطبيب</th>
+<th>المريض</th>
+<th>التخصص</th>
+<th>الوقت</th>
+</tr>
+
+<tr>
+<td>د. خالد العتيبي</td>
+<td>محمد علي</td>
+<td>الأسنان</td>
+<td>10:00 AM</td>
+</tr>
+
+<tr>
+<td>د. سارة الأحمد</td>
+<td>ريم عبدالله</td>
+<td>القلب</td>
+<td>11:30 AM</td>
+</tr>
+
+<tr>
+<td>د. أحمد القحطاني</td>
+<td>عبدالله حسن</td>
+<td>العظام</td>
+<td>2:00 PM</td>
+</tr>
+
+</table>
+
+<div class="card">
+
+<h3 style="margin-bottom:20px;">
+بيانات المريض
+</h3>
+
+<p>
+<b>العمر:</b>
+<span id="docAge">
+—
+</span>
+</p>
+
+<br>
+
+<p>
+<b>الوزن:</b>
+<span id="docWeight">
+—
+</span>
+</p>
+
+<br>
+
+<p>
+<b>ضغط الدم:</b>
+<span id="docPressure">
+—
+</span>
+</p>
+
+<br>
+
+<p>
+<b>السكر:</b>
+<span id="docSugar">
+—
+</span>
+</p>
+
+<br>
+
+<p>
+<b>الأعراض:</b>
+<span id="docSymptoms">
+—
+</span>
+</p>
+
+<hr style="margin:25px 0;">
+
+<div class="input-group">
+
+<label>
+تشخيص الطبيب
+</label>
+
+<input type="text"
+id="doctorDiagnosis">
+
+</div>
+
+<div class="input-group">
+
+<label>
+العلاج
+</label>
+
+<input type="text"
+id="doctorMedicine">
+
+</div>
+
+<button class="btn-login"
+onclick="saveDiagnosis()">
+
+حفظ التشخيص
+
+</button>
+
+</div>
+</div>
+
+<div class="card">
+
+<h3 style="margin-bottom:20px;">
+صلاحيات الطبيب
+</h3>
+
+<div class="services-grid">
+
+<div class="service-box">
+
+<i class="fas fa-user-injured"
+style="color:#0b3b91;"></i>
+
+<b>
+إدارة المرضى
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-notes-medical"
+style="color:#05CD99;"></i>
+
+<b>
+التشخيص الطبي
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-pills"
+style="color:#ff4d4d;"></i>
+
+<b>
+الوصفات الطبية
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-calendar-plus"
+style="color:#4318FF;"></i>
+
+<b>
+إدارة المواعيد
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ADMIN -->
+
+<div id="section-admin"
+class="dashboard-section">
+
+<h2 style="margin-bottom:20px;">
+إحصائيات النظام
+</h2>
+
+<div class="stat-grid">
+
+<div class="card" style="text-align:center;">
+
+<i class="fas fa-users"
+style="font-size:35px;color:#0b3b91;"></i>
+
+<h1 style="margin:15px 0;">
+1,247
+</h1>
+
+<p>
+إجمالي المرضى
+</p>
+
+</div>
+
+<div class="card" style="text-align:center;">
+
+<i class="fas fa-user-md"
+style="font-size:35px;color:#ff4d4d;"></i>
+
+<h1 style="margin:15px 0;">
+38
+</h1>
+
+<p>
+عدد الأطباء
+</p>
+
+</div>
+
+<div class="card" style="text-align:center;">
+
+<i class="fas fa-chart-line"
+style="font-size:35px;color:#05CD99;"></i>
+
+<h1 style="margin:15px 0;">
+99.8%
+</h1>
+
+<p>
+كفاءة النظام
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3 style="margin-bottom:20px;">
+لوحة تحكم الإدارة
+</h3>
+
+<div class="services-grid">
+
+<div class="service-box">
+
+<i class="fas fa-users-cog"
+style="color:#0b3b91;"></i>
+
+<b>
+إدارة المستخدمين
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-hospital-user"
+style="color:#05CD99;"></i>
+
+<b>
+إدارة الأطباء
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-shield-alt"
+style="color:#ff4d4d;"></i>
+
+<b>
+الصلاحيات
+</b>
+
+</div>
+
+<div class="service-box">
+
+<i class="fas fa-database"
+style="color:#4318FF;"></i>
+
+<b>
+قاعدة البيانات
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showBox(id){
+
+document.querySelectorAll('.auth-box')
+.forEach(box=>{
+
+box.classList.remove('active');
+
+});
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+/* REGISTER */
+
+function registerUser(){
+
+let name =
+document.getElementById('regName').value;
+
+let email =
+document.getElementById('regEmail').value;
+
+let password =
+document.getElementById('regPassword').value;
+
+let confirm =
+document.getElementById('regConfirm').value;
+
+let role =
+document.getElementById('regRole').value;
+
+if(name==="" ||
+email==="" ||
+password==="" ||
+confirm===""){
+
+document.getElementById('registerError')
+.style.display='block';
+
+document.getElementById('registerError')
+.innerHTML='الرجاء تعبئة جميع الحقول';
+
+return;
+
+}
+
+if(password !== confirm){
+
+document.getElementById('registerError')
+.style.display='block';
+
+document.getElementById('registerError')
+.innerHTML='كلمتا المرور غير متطابقتين';
+
+return;
+
+}
+
+localStorage.setItem('name',name);
+
+localStorage.setItem('email',email);
+
+localStorage.setItem('password',password);
+
+localStorage.setItem('role',role);
+
+alert('تم إنشاء الحساب بنجاح');
+
+showBox('loginBox');
+
+}
+
+/* LOGIN */
+
+function loginUser(){
+
+let email =
+document.getElementById('loginEmail').value;
+
+let password =
+document.getElementById('loginPassword').value;
+
+let savedEmail =
+localStorage.getItem('email');
+
+let savedPassword =
+localStorage.getItem('password');
+
+let savedName =
+localStorage.getItem('name');
+
+let savedRole =
+localStorage.getItem('role');
+
+if(email===savedEmail &&
+password===savedPassword){
+
+document.getElementById('login-page')
+.style.display='none';
+
+document.getElementById('app-interface')
+.style.display='flex';
+
+document.getElementById('outName')
+.innerText='مرحباً بك، ' + savedName;
+
+document.getElementById('outDetails')
+.innerText='البريد الإلكتروني: ' + savedEmail;
+
+document.getElementById('roleText')
+.innerText='نوع الحساب: ' + savedRole;
+
+
+/* إرسال بيانات المريض */
+
+function sendToDoctor(){
+
+let age =
+document.getElementById('patientAge').value;
+
+let weight =
+document.getElementById('patientWeight').value;
+
+let pressure =
+document.getElementById('patientPressure').value;
+
+let sugar =
+document.getElementById('patientSugar').value;
+
+let symptoms =
+document.getElementById('patientSymptoms').value;
+
+localStorage.setItem('age',age);
+
+localStorage.setItem('weight',weight);
+
+localStorage.setItem('pressure',pressure);
+
+localStorage.setItem('sugar',sugar);
+
+localStorage.setItem('symptoms',symptoms);
+
+alert('تم إرسال البيانات للطبيب');
+
+}
+
+/* تحميل بيانات الطبيب */
+
+function loadDoctorData(){
+
+document.getElementById('docAge')
+.innerText =
+localStorage.getItem('age') || '-';
+
+document.getElementById('docWeight')
+.innerText =
+localStorage.getItem('weight') || '-';
+
+document.getElementById('docPressure')
+.innerText =
+localStorage.getItem('pressure') || '-';
+
+document.getElementById('docSugar')
+.innerText =
+localStorage.getItem('sugar') || '-';
+
+document.getElementById('docSymptoms')
+.innerText =
+localStorage.getItem('symptoms') || '-';
+
+}
+
+/* حفظ التشخيص */
+
+function saveDiagnosis(){
+
+let diagnosis =
+document.getElementById('doctorDiagnosis').value;
+
+let medicine =
+document.getElementById('doctorMedicine').value;
+
+localStorage.setItem(
+'diagnosis',
+diagnosis
+);
+
+localStorage.setItem(
+'medicine',
+medicine
+);
+
+alert('تم حفظ التشخيص');
+
+}
+/* الصلاحيات */
+
+if(savedRole === 'patient'){
+
+show('patient');
+
+document.getElementById('btn-d')
+.style.display='none';
+
+document.getElementById('btn-a')
+.style.display='none';
+
+}
+
+else if(savedRole === 'doctor'){
+
+show('doctor');
+
+document.getElementById('btn-p')
+.style.display='none';
+
+document.getElementById('btn-a')
+.style.display='none';
+
+}
+
+else if(savedRole === 'admin'){
+
+show('admin');
+
+}
+
+}else{
+
+document.getElementById('loginError')
+.style.display='block';
+
+document.getElementById('loginError')
+.innerHTML=
+'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+
+}
+
+}
+
+/* FORGOT PASSWORD */
+
+function forgotPassword(){
+
+let email =
+document.getElementById('forgotEmail').value;
+
+let savedEmail =
+localStorage.getItem('email');
+
+if(email===""){
+
+alert('أدخل البريد الإلكتروني');
+
+return;
+
+}
+
+if(email !== savedEmail){
+
+alert('البريد الإلكتروني غير موجود');
+
+return;
+
+}
+
+alert(
+'تم إرسال رابط استعادة كلمة المرور إلى: '
++ email);
+
+showBox('loginBox');
+
+}
+
+/* SHOW SECTIONS */
+
+function show(id){
+
+let role =
+localStorage.getItem('role');
+
+if(role === 'patient' &&
+id !== 'patient'){
+
+return;
+
+}
+
+if(role === 'doctor' &&
+id !== 'doctor'){
+
+return;
+
+}
+
+document.querySelectorAll('.dashboard-section')
+.forEach(s=>{
+
+s.classList.remove('active');
+
+});
+
+document.querySelectorAll('.sidebar-item')
+.forEach(i=>{
+
+i.classList.remove('active');
+
+});
+
+document.getElementById('section-' + id)
+.classList.add('active');
+
+document.getElementById(
+'btn-' +
+(id==='patient'
+? 'p'
+: id==='doctor'
+? 'd'
+: 'a')
+).classList.add('active');
+
+}
+
+/* DARK MODE */
+
+function toggleDarkMode(){
+
+document.body.classList.toggle('dark');
+
+}
+
+/* LOGOUT */
+
+function logout(){
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+
+</html>
