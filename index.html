@@ -8,7 +8,7 @@
 
 <title>Digital Twin Health</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800;900&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -17,21 +17,33 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 :root{
 --primary:#0b3b91;
+--primary-dark:#082a6b;
 --secondary:#25aae1;
---success:#05CD99;
---danger:#ff4d4d;
---warning:#ffb547;
---bg:#f4f8ff;
+--mint:#05CD99;
+--amber:#F59E0B;
+--red:#EF4444;
+--purple:#8B5CF6;
+--bg:#f2f6fd;
 --card:#ffffff;
 --text:#10244c;
 --gray:#7d8ba7;
+--danger:#c00000;
+--font-display:'Tajawal',sans-serif;
+--font-body:'Cairo',sans-serif;
+--radius-lg:26px;
+--radius-md:18px;
+--radius-sm:14px;
 }
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Cairo',sans-serif;
+font-family:var(--font-body);
+}
+
+h1,h2,h3,h4,.logo-title,.health-circle,.stat-number{
+font-family:var(--font-display);
 }
 
 body{
@@ -41,7 +53,9 @@ color:var(--text);
 transition:.3s;
 }
 
-/* LOGIN */
+::selection{ background:var(--secondary); color:white; }
+
+/* ================= LOGIN ================= */
 
 #login-page{
 min-height:100vh;
@@ -50,27 +64,153 @@ min-height:100vh;
 .auth-container{
 min-height:100vh;
 display:flex;
+}
+
+/* --- left decorative panel --- */
+
+.auth-visual{
+flex:1.1;
+position:relative;
+background:
+radial-gradient(circle at 15% 20%, rgba(37,170,225,.35), transparent 45%),
+radial-gradient(circle at 85% 80%, rgba(5,205,153,.25), transparent 50%),
+linear-gradient(155deg,var(--primary-dark) 0%, var(--primary) 55%, #072154 100%);
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:60px 70px;
+overflow:hidden;
+}
+
+.auth-visual::before{
+content:'';
+position:absolute;
+inset:0;
+background-image:
+radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+background-size:26px 26px;
+opacity:.5;
+}
+
+.visual-brand{
+display:flex;
+align-items:center;
+gap:14px;
+margin-bottom:60px;
+position:relative;
+z-index:2;
+}
+
+.visual-brand .mark{
+width:46px;
+height:46px;
+border-radius:14px;
+background:rgba(255,255,255,.14);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+}
+
+.visual-brand span{
+font-family:var(--font-display);
+font-weight:800;
+font-size:20px;
+}
+
+.visual-title{
+font-size:44px;
+font-weight:900;
+line-height:1.35;
+margin-bottom:18px;
+position:relative;
+z-index:2;
+max-width:480px;
+}
+
+.visual-sub{
+color:rgba(255,255,255,.75);
+font-size:15.5px;
+line-height:1.9;
+max-width:440px;
+margin-bottom:45px;
+position:relative;
+z-index:2;
+}
+
+.ecg-wrap{
+position:relative;
+z-index:2;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.15);
+border-radius:22px;
+padding:22px 24px;
+backdrop-filter:blur(6px);
+margin-bottom:34px;
+}
+
+.ecg-wrap svg{ width:100%; height:70px; display:block; }
+
+.ecg-line{
+fill:none;
+stroke:var(--mint);
+stroke-width:2.4;
+stroke-linecap:round;
+stroke-linejoin:round;
+stroke-dasharray:6 1400;
+animation:ecg-run 3.4s linear infinite;
+filter:drop-shadow(0 0 6px rgba(5,205,153,.7));
+}
+
+@keyframes ecg-run{
+from{ stroke-dashoffset:1400; }
+to{ stroke-dashoffset:0; }
+}
+
+.visual-stats{
+display:flex;
+gap:28px;
+position:relative;
+z-index:2;
+flex-wrap:wrap;
+}
+
+.visual-stats div{ min-width:110px; }
+
+.visual-stats b{
+font-family:var(--font-display);
+font-size:26px;
+font-weight:800;
+display:block;
+}
+
+.visual-stats span{
+color:rgba(255,255,255,.65);
+font-size:12.5px;
+}
+
+/* --- right form panel --- */
+
+.auth-forms{
+flex:1;
+display:flex;
 justify-content:center;
 align-items:center;
 padding:30px;
-background:
-linear-gradient(rgba(6,22,53,.85),rgba(6,22,53,.85)),
-url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop');
-
-background-size:cover;
-background-position:center;
+background:var(--bg);
 }
 
 .auth-box{
 width:100%;
-max-width:470px;
-background:rgba(255,255,255,.97);
+max-width:430px;
+background:var(--card);
 padding:40px;
-border-radius:35px;
-backdrop-filter:blur(10px);
-box-shadow:0 20px 50px rgba(0,0,0,.2);
+border-radius:var(--radius-lg);
+box-shadow:0 20px 50px rgba(11,59,145,.08);
 display:none;
-animation:fade .5s ease;
+animation:fade .45s ease;
+border:1px solid #eef2fb;
 }
 
 .auth-box.active{
@@ -78,301 +218,533 @@ display:block;
 }
 
 @keyframes fade{
-
-from{
-opacity:0;
-transform:translateY(20px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
+from{ opacity:0; transform:translateY(16px); }
+to{ opacity:1; transform:translateY(0); }
 }
 
 .logo{
 text-align:center;
-margin-bottom:30px;
+margin-bottom:28px;
+}
+
+.logo img{
+width:100px;
+margin-bottom:12px;
 }
 
 .logo-title{
-font-size:42px;
+font-size:28px;
 color:var(--primary);
+margin-bottom:10px;
 font-weight:800;
-margin-bottom:15px;
 }
 
 .logo p{
 color:var(--gray);
 line-height:1.8;
+font-size:14px;
 }
 
 .input-group{
-margin-bottom:18px;
+margin-bottom:16px;
+position:relative;
 }
 
 .input-group label{
 display:block;
-margin-bottom:8px;
+margin-bottom:7px;
 font-weight:700;
+color:var(--text);
+font-size:14px;
 }
 
 .input-group input,
 .input-group select{
 width:100%;
-padding:15px;
-border-radius:15px;
-border:1px solid #dce5f5;
+padding:14px 15px;
+border-radius:var(--radius-sm);
+border:1.5px solid #e3e9f7;
 outline:none;
+font-size:14.5px;
+transition:.2s;
 background:#f9fbff;
-font-size:15px;
-transition:.3s;
+font-family:var(--font-body);
 }
 
 .input-group input:focus,
 .input-group select:focus{
 border-color:var(--secondary);
 box-shadow:0 0 0 4px rgba(37,170,225,.15);
+background:white;
 }
+
+.input-group small{
+display:block;
+margin-top:6px;
+color:var(--gray);
+font-size:12px;
+}
+
+.input-group.invalid input,
+.input-group.invalid select{
+border-color:var(--danger);
+box-shadow:0 0 0 4px rgba(192,0,0,.08);
+}
+
+.pw-toggle{
+position:absolute;
+left:14px;
+top:39px;
+cursor:pointer;
+color:var(--gray);
+font-size:14px;
+}
+
+.pw-toggle:hover{ color:var(--primary); }
 
 .btn-login{
 width:100%;
-padding:15px;
+padding:14px;
 border:none;
-border-radius:15px;
+border-radius:var(--radius-sm);
 background:linear-gradient(135deg,var(--primary),var(--secondary));
 color:white;
-font-size:16px;
+font-size:15.5px;
 font-weight:700;
 cursor:pointer;
-transition:.3s;
+transition:.25s;
+font-family:var(--font-body);
+display:flex;
+align-items:center;
+justify-content:center;
+gap:8px;
 }
 
 .btn-login:hover{
-transform:translateY(-3px);
+transform:translateY(-2px);
+box-shadow:0 10px 24px rgba(11,59,145,.28);
+}
+
+.btn-login:disabled{
+opacity:.65;
+cursor:not-allowed;
+transform:none;
+box-shadow:none;
 }
 
 .links{
-margin-top:20px;
+margin-top:18px;
 text-align:center;
 }
 
 .links p{
-margin-top:12px;
+margin-top:10px;
 color:var(--primary);
 cursor:pointer;
-font-weight:700;
-}
-
-.error{
-display:none;
-background:#ffe2e2;
-color:#c00000;
-padding:14px;
-border-radius:14px;
-margin-bottom:18px;
+font-weight:600;
 font-size:14px;
 }
 
-/* APP */
+.links p:hover{ text-decoration:underline; }
+
+.error,.success-msg{
+display:none;
+padding:13px 14px;
+border-radius:var(--radius-sm);
+margin-bottom:16px;
+font-size:13.5px;
+line-height:1.6;
+}
+
+.error{ background:#ffe9e9; color:#c00000; }
+.success-msg{ background:#e3fbf1; color:#087a55; }
+
+.demo-hint{
+background:#eef6ff;
+color:var(--primary);
+border:1px dashed #b9d7f5;
+padding:11px 13px;
+border-radius:var(--radius-sm);
+font-size:12px;
+margin-bottom:16px;
+line-height:1.85;
+}
+
+/* ================= APP ================= */
 
 #app-interface{
 display:none;
 min-height:100vh;
+flex-direction:row;
 }
 
 .sidebar{
-width:95px;
+width:110px;
 background:white;
 display:flex;
 flex-direction:column;
 align-items:center;
-padding:25px 0;
+padding:28px 0;
+border-left:1px solid #eef2fb;
 position:fixed;
 height:100%;
-border-left:1px solid #edf2ff;
-z-index:100;
+z-index:500;
+}
+
+.sidebar-brand{
+width:44px;
+height:44px;
+border-radius:13px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+margin-bottom:34px;
+font-size:17px;
 }
 
 .sidebar-item{
-width:55px;
-height:55px;
+width:78px;
+padding:10px 0;
 display:flex;
+flex-direction:column;
+gap:6px;
 justify-content:center;
 align-items:center;
-border-radius:18px;
-margin-bottom:20px;
-color:#94a3b8;
-font-size:20px;
+border-radius:16px;
+margin-bottom:14px;
+color:#a3aed0;
 cursor:pointer;
-transition:.3s;
+transition:.25s;
+font-size:18px;
 }
 
-.sidebar-item:hover{
-transform:translateY(-4px);
+.sidebar-item span{
+font-size:10.5px;
+font-weight:700;
 }
+
+.sidebar-item:hover{ background:#eef3fc; color:var(--primary); }
 
 .sidebar-item.active{
 background:linear-gradient(135deg,var(--primary),var(--secondary));
 color:white;
+box-shadow:0 8px 18px rgba(11,59,145,.25);
 }
+
+.sidebar-item.active:hover{ color:white; }
 
 .main-content{
 flex:1;
-padding:40px;
-margin-right:95px;
+padding:36px 40px;
+margin-right:110px;
+max-width:1400px;
 }
 
-.dashboard-section{
+.dashboard-section{ display:none; }
+.dashboard-section.active{ display:block; }
+
+/* ================= TOP BAR ================= */
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:26px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.top-bar h2{ font-size:24px; font-weight:800; }
+
+.search-box{
+background:white;
+padding:13px 17px;
+border-radius:var(--radius-md);
+display:flex;
+align-items:center;
+gap:10px;
+width:300px;
+max-width:100%;
+box-shadow:0 5px 15px rgba(11,59,145,.04);
+color:var(--gray);
+}
+
+.search-box input{
+border:none;
+outline:none;
+width:100%;
+background:none;
+font-family:var(--font-body);
+}
+
+.top-actions{ display:flex; gap:13px; position:relative; }
+
+.notification-btn{
+width:48px;
+height:48px;
+border-radius:15px;
+background:white;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(11,59,145,.04);
+position:relative;
+transition:.2s;
+color:var(--text);
+}
+
+.notification-btn:hover{ transform:translateY(-2px); }
+
+.notification-btn span.dot{
+position:absolute;
+top:9px;
+left:9px;
+width:9px;
+height:9px;
+background:var(--red);
+border-radius:50%;
+border:2px solid white;
+}
+
+.notif-panel{
 display:none;
-animation:fade .4s ease;
+position:absolute;
+top:58px;
+left:0;
+width:290px;
+background:white;
+border-radius:var(--radius-md);
+box-shadow:0 20px 40px rgba(11,59,145,.15);
+padding:10px;
+z-index:900;
 }
 
-.dashboard-section.active{
-display:block;
+.notif-panel.open{ display:block; }
+
+.notif-item{
+padding:12px;
+border-radius:12px;
+display:flex;
+gap:10px;
+align-items:flex-start;
 }
+
+.notif-item:hover{ background:#f5f8ff; }
+
+.notif-item i{ color:var(--primary); margin-top:3px; }
+
+.notif-item b{ display:block; font-size:13px; }
+.notif-item p{ font-size:12px; color:var(--gray); margin-top:2px; }
+
+/* ================= CARDS ================= */
 
 .card{
 background:white;
-padding:25px;
-border-radius:25px;
-margin-bottom:25px;
-box-shadow:0 10px 30px rgba(0,0,0,.03);
-animation:up .5s ease;
+padding:24px;
+border-radius:var(--radius-lg);
+box-shadow:0 10px 30px rgba(11,59,145,.045);
+margin-bottom:24px;
+border:1px solid #f1f4fb;
 }
 
-@keyframes up{
-
-from{
-opacity:0;
-transform:translateY(25px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
+.card > h3{ font-size:17px; margin-bottom:4px; }
 
 .stat-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-margin-bottom:30px;
+gap:18px;
+margin-bottom:28px;
 }
+
+.card-center{ text-align:center; }
+
+.icon-badge{
+width:56px;
+height:56px;
+border-radius:16px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+margin-bottom:14px;
+}
+
+.card-center h2{ font-size:24px; font-weight:800; }
+.card-center p{ color:var(--gray); font-size:13.5px; margin-top:4px; }
+
+.health-score{
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+padding:30px 32px;
+border-radius:var(--radius-lg);
+margin-bottom:28px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:24px;
+position:relative;
+overflow:hidden;
+}
+
+.health-score::before{
+content:'';
+position:absolute;
+inset:0;
+background-image:radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
+background-size:22px 22px;
+opacity:.6;
+}
+
+.health-score > div, .health-score .health-circle{ position:relative; z-index:2; }
+
+.health-score h2{ margin-bottom:8px; font-size:20px; }
+.health-score p{ color:rgba(255,255,255,.8); font-size:13.5px; }
+
+.health-circle{
+width:120px;
+height:120px;
+border-radius:50%;
+border:7px solid rgba(255,255,255,.3);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+font-weight:800;
+background:rgba(255,255,255,.12);
+}
+
+.trend-card canvas{ width:100%; height:120px; display:block; }
+.trend-legend{ display:flex; gap:18px; margin-top:10px; font-size:12.5px; color:var(--gray); }
+.trend-legend b{ color:var(--primary); }
+
+/* ================= SERVICES ================= */
 
 .services-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:18px;
 }
 
 .service-box{
 background:white;
-padding:25px;
-border-radius:20px;
+padding:24px;
+border-radius:var(--radius-md);
 text-align:center;
-border:1px solid #edf2ff;
-transition:.3s;
 cursor:pointer;
+transition:.25s;
+box-shadow:0 5px 15px rgba(11,59,145,.04);
+border:1px solid #f1f4fb;
 }
 
-.service-box:hover{
-transform:translateY(-6px);
-border-color:var(--primary);
-}
+.service-box:hover{ transform:translateY(-5px); box-shadow:0 14px 28px rgba(11,59,145,.1); }
 
-.service-box i{
-font-size:32px;
-margin-bottom:15px;
-display:block;
-}
+.service-box i{ font-size:26px; margin-bottom:12px; display:block; }
+.service-box b{ font-size:13.5px; }
 
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:15px;
-}
+/* ================= TABLE ================= */
 
-th{
-padding:12px;
-color:#94a3b8;
-border-bottom:1px solid #edf2ff;
-text-align:right;
-}
+table{ width:100%; border-collapse:collapse; margin-top:14px; }
 
-td{
-padding:15px 12px;
-border-bottom:1px solid #edf2ff;
-font-weight:600;
-}
+th{ text-align:right; color:#94a3b8; padding:11px; border-bottom:1px solid #edf2f7; font-size:13px; }
 
-.health-circle{
-width:170px;
-height:170px;
-border-radius:50%;
-background:conic-gradient(
-var(--success) 0% 78%,
-#e9edf7 78% 100%
-);
+td{ padding:14px 10px; border-bottom:1px solid #edf2f7; font-weight:600; font-size:13.5px; }
 
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:35px;
-font-weight:800;
-color:var(--success);
-margin:auto;
-}
-
-.notification{
-padding:18px;
-border-radius:18px;
-margin-bottom:15px;
+.badge{
+display:inline-block;
+padding:4px 12px;
+border-radius:20px;
+font-size:12px;
 font-weight:700;
 }
 
-.notification.warning{
-background:#fff7e6;
-color:#b76e00;
+.badge-active{ background:#e3fbf1; color:#087a55; }
+.badge-inactive{ background:#ffe9e9; color:#c00000; }
+
+.mini-btn{
+border:none;
+background:#eef3fc;
+color:var(--primary);
+padding:6px 12px;
+border-radius:10px;
+font-size:12px;
+cursor:pointer;
+font-weight:700;
+font-family:var(--font-body);
 }
 
-.notification.success{
-background:#ecfff4;
-color:#059669;
+.mini-btn:hover{ background:var(--primary); color:white; }
+
+/* ================= TIMELINE ================= */
+
+.timeline-item{ display:flex; gap:14px; margin-bottom:18px; align-items:flex-start; }
+
+.timeline-icon{
+width:44px;
+height:44px;
+border-radius:14px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#edf4ff;
+color:var(--primary);
+flex-shrink:0;
 }
 
-/* DARK MODE */
+.timeline-item h4{ font-size:14px; }
+.timeline-item p{ font-size:12.5px; }
 
-.dark{
-background:#0f172a;
+/* ================= PROGRESS ================= */
+
+.progress-bar{ height:9px; background:#e8efff; border-radius:30px; overflow:hidden; margin-top:12px; }
+.progress-fill{ height:100%; background:linear-gradient(135deg,var(--primary),var(--secondary)); transition:width .4s ease; }
+
+/* ================= ALERT ================= */
+
+.alert-box{ background:#fff7ed; border-right:5px solid var(--amber); padding:16px 18px; border-radius:var(--radius-sm); margin-bottom:20px; font-size:14px; }
+
+/* ================= TOAST ================= */
+
+#toast-container{ position:fixed; bottom:28px; left:28px; display:flex; flex-direction:column; gap:10px; z-index:2000; }
+
+.toast{
+background:var(--text);
 color:white;
+padding:13px 18px;
+border-radius:14px;
+font-size:13.5px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+animation:fade .3s ease;
 }
 
-.dark .card,
-.dark .sidebar,
-.dark .auth-box,
-.dark .service-box{
-background:#1e293b;
-color:white;
-}
+.toast.toast-error{ background:#c00000; }
+.toast.toast-success{ background:#087a55; }
 
-.dark input,
-.dark select{
-background:#0f172a;
-color:white;
-border-color:#334155;
-}
+/* ================= DARK MODE ================= */
 
-.dark td,
-.dark th,
-.dark p{
-color:#e2e8f0;
-}
+.dark-mode{ background:#0f172a; color:white; }
 
-/* MOBILE */
+.dark-mode .card,
+.dark-mode .sidebar,
+.dark-mode .search-box,
+.dark-mode .notification-btn,
+.dark-mode .service-box,
+.dark-mode .notif-panel{ background:#1e293b; color:white; border-color:#2c3a54; }
+
+.dark-mode .input-group input,
+.dark-mode .input-group select{ background:#0f172a; color:white; border-color:#334155; }
+
+.dark-mode table td, .dark-mode table th{ border-color:#334155; }
+.dark-mode .icon-badge{ filter:brightness(1.15); }
+
+/* ================= MOBILE ================= */
+
+@media(max-width:960px){
+.auth-visual{ display:none; }
+}
 
 @media(max-width:768px){
 
@@ -382,24 +754,25 @@ height:80px;
 bottom:0;
 top:auto;
 flex-direction:row;
-justify-content:center;
+justify-content:space-around;
+z-index:1000;
+border-left:none;
+border-top:1px solid #eef2fb;
+padding:10px 0;
 }
 
-.main-content{
-margin-right:0;
-margin-bottom:90px;
-padding:20px;
-}
+.sidebar-brand{ display:none; }
+.sidebar-item{ width:auto; margin-bottom:0; }
+.sidebar-item span{ display:none; }
 
-.logo-title{
-font-size:30px;
-}
+.main-content{ margin-right:0; margin-bottom:100px; padding:20px; }
 
-.stat-grid,
-.services-grid{
-grid-template-columns:1fr;
-}
+.health-score{ justify-content:center; text-align:center; }
 
+#toast-container{ left:15px; right:15px; bottom:110px; }
+.toast{ text-align:center; }
+
+.notif-panel{ left:auto; right:0; width:260px; }
 }
 
 </style>
@@ -408,76 +781,96 @@ grid-template-columns:1fr;
 
 <body>
 
-<!-- LOGIN -->
+<div id="toast-container"></div>
 
 <div id="login-page">
 
 <div class="auth-container">
 
-<!-- REGISTER -->
+<!-- decorative left panel -->
+<div class="auth-visual">
+
+<div class="visual-brand">
+<div class="mark"><i class="fas fa-dna"></i></div>
+<span>Digital Twin Health</span>
+</div>
+
+<h1 class="visual-title">توأمك الرقمي الصحي… يتابعك أول بأول</h1>
+<p class="visual-sub">
+أدخل قراءاتك اليومية ودع النظام يبني نسخة رقمية من حالتك الصحية، يتنبأ بمساراتها المستقبلية،
+ويقارن بين سيناريوهات نمط الحياة المختلفة.
+</p>
+
+<div class="ecg-wrap">
+<svg viewBox="0 0 600 80" preserveAspectRatio="none">
+<path class="ecg-line" d="M0,40 L60,40 L80,40 L95,10 L110,70 L125,20 L140,40 L180,40 L200,40 L215,15 L230,65 L245,25 L260,40 L600,40" />
+</svg>
+</div>
+
+<div class="visual-stats">
+<div><b>≤ 5s</b><span>زمن توليد المحاكاة</span></div>
+<div><b>99.9%</b><span>معدل توفر النظام</span></div>
+<div><b>AES-256</b><span>تشفير البيانات</span></div>
+</div>
+
+</div>
+
+<!-- forms panel -->
+<div class="auth-forms">
 
 <div class="auth-box active" id="registerBox">
 
 <div class="logo">
 
+<img src="logo.png" alt="logo" onerror="this.style.display='none'">
+
 <h1 class="logo-title">
-Digital Twin Health
+إنشاء حساب جديد
 </h1>
 
 <p>
-إنشاء حساب جديد للنظام الصحي الذكي
+انضم إلى النظام الصحي الذكي وابدأ بمتابعة توأمك الرقمي
 </p>
 
 </div>
 
 <div class="error" id="registerError"></div>
 
-<div class="input-group">
+<div class="input-group" id="grp-regName">
 <label>الاسم الكامل</label>
-<input type="text" id="regName">
+<input type="text" id="regName" placeholder="مثال: سارة أحمد" autocomplete="name">
+<small>يُسمح بالحروف والمسافات فقط</small>
 </div>
 
-<div class="input-group">
+<div class="input-group" id="grp-regEmail">
 <label>البريد الإلكتروني</label>
-<input type="email" id="regEmail">
+<input type="email" id="regEmail" placeholder="example@mail.com" autocomplete="email">
 </div>
 
-<div class="input-group">
+<div class="input-group" id="grp-regPassword">
 <label>كلمة المرور</label>
-<input type="password" id="regPassword">
+<input type="password" id="regPassword" placeholder="6 أحرف على الأقل" autocomplete="new-password">
+<i class="fas fa-eye pw-toggle" onclick="togglePassword('regPassword', this)"></i>
 </div>
 
-<div class="input-group">
+<div class="input-group" id="grp-regConfirm">
 <label>تأكيد كلمة المرور</label>
-<input type="password" id="regConfirm">
+<input type="password" id="regConfirm" autocomplete="new-password">
+<i class="fas fa-eye pw-toggle" onclick="togglePassword('regConfirm', this)"></i>
 </div>
 
 <div class="input-group">
-
-<label>
-نوع الحساب
-</label>
-
+<label>نوع الحساب</label>
 <select id="regRole">
-
-<option value="patient">
-مريض
-</option>
-
-<option value="doctor">
-طبيب
-</option>
-
-<option value="admin">
-مدير النظام
-</option>
-
+<option value="patient">مريض</option>
+<option value="doctor">طبيب</option>
+<option value="admin">مدير</option>
 </select>
-
 </div>
+
 
 <button class="btn-login" onclick="registerUser()">
-إنشاء حساب
+<i class="fas fa-user-plus"></i> إنشاء حساب
 </button>
 
 <div class="links">
@@ -490,36 +883,49 @@ Digital Twin Health
 
 </div>
 
-<!-- LOGIN -->
-
 <div class="auth-box" id="loginBox">
 
 <div class="logo">
+
+<img src="logo.png" alt="logo" onerror="this.style.display='none'">
 
 <h1 class="logo-title">
 تسجيل الدخول
 </h1>
 
 <p>
-مرحباً بك في منصة Digital Twin Health
+مرحباً بك في نظام التوأم الرقمي الصحي
 </p>
 
 </div>
 
 <div class="error" id="loginError"></div>
 
-<div class="input-group">
+<div class="demo-hint" id="loginHint"></div>
+
+<div class="input-group" id="grp-loginEmail">
 <label>البريد الإلكتروني</label>
-<input type="email" id="loginEmail">
+<input type="email" id="loginEmail" autocomplete="email">
+</div>
+
+<div class="input-group" id="grp-loginPassword">
+<label>كلمة المرور</label>
+<input type="password" id="loginPassword" autocomplete="current-password">
+<i class="fas fa-eye pw-toggle" onclick="togglePassword('loginPassword', this)"></i>
 </div>
 
 <div class="input-group">
-<label>كلمة المرور</label>
-<input type="password" id="loginPassword">
+<label>نوع الحساب</label>
+<select id="loginRole">
+<option value="patient">مريض</option>
+<option value="doctor">طبيب</option>
+<option value="admin">مدير</option>
+</select>
 </div>
 
-<button class="btn-login" onclick="loginUser()">
-دخول النظام
+
+<button class="btn-login" id="loginBtn" onclick="loginUser()">
+<i class="fas fa-right-to-bracket"></i> دخول النظام
 </button>
 
 <div class="links">
@@ -536,29 +942,32 @@ Digital Twin Health
 
 </div>
 
-<!-- FORGOT -->
-
 <div class="auth-box" id="forgotBox">
 
 <div class="logo">
+
+<img src="logo.png" alt="logo" onerror="this.style.display='none'">
 
 <h1 class="logo-title">
 استعادة كلمة المرور
 </h1>
 
 <p>
-أدخل بريدك الإلكتروني
+أدخل بريدك الإلكتروني لإرسال رابط الاستعادة
 </p>
 
 </div>
 
-<div class="input-group">
+<div class="error" id="forgotError"></div>
+<div class="success-msg" id="forgotSuccess"></div>
+
+<div class="input-group" id="grp-forgotEmail">
 <label>البريد الإلكتروني</label>
-<input type="email" id="forgotEmail">
+<input type="email" id="forgotEmail" autocomplete="email">
 </div>
 
 <button class="btn-login" onclick="forgotPassword()">
-إرسال الرابط
+<i class="fas fa-paper-plane"></i> إرسال الرابط
 </button>
 
 <div class="links">
@@ -575,669 +984,297 @@ Digital Twin Health
 
 </div>
 
-<!-- APP -->
+</div>
 
 <div id="app-interface">
 
 <div class="sidebar">
 
-<div class="sidebar-item active"
-id="btn-p"
-onclick="show('patient')">
+<div class="sidebar-brand"><i class="fas fa-dna"></i></div>
 
+<div class="sidebar-item active" id="btn-p" onclick="show('patient')" title="لوحة المريض">
 <i class="fas fa-user"></i>
-
+<span>المريض</span>
 </div>
 
-<div class="sidebar-item"
-id="btn-d"
-onclick="show('doctor')">
-
+<div class="sidebar-item" id="btn-d" onclick="show('doctor')" title="لوحة الطبيب">
 <i class="fas fa-user-md"></i>
-
+<span>الطبيب</span>
 </div>
 
-<div class="sidebar-item"
-id="btn-a"
-onclick="show('admin')">
-
-<i class="fas fa-chart-line"></i>
-
+<div class="sidebar-item" id="btn-a" onclick="show('admin')" title="لوحة المدير">
+<i class="fas fa-chart-bar"></i>
+<span>المدير</span>
 </div>
 
-<div class="sidebar-item"
-onclick="toggleDarkMode()">
-
-<i class="fas fa-moon"></i>
-
-</div>
-
-<div class="sidebar-item"
-style="margin-top:auto;color:red"
-onclick="logout()">
-
+<div class="sidebar-item" style="margin-top:auto;color:#EF4444" onclick="logoutUser()" title="تسجيل الخروج">
 <i class="fas fa-sign-out-alt"></i>
-
+<span>خروج</span>
 </div>
 
 </div>
 
 <div class="main-content">
 
-<!-- PATIENT -->
+<div id="section-patient" class="dashboard-section active">
 
-<div id="section-patient"
-class="dashboard-section active">
-
-<div class="card"
-style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:20px;
-">
+<div class="top-bar">
 
 <div>
-
-<h2 id="outName">
-مرحباً بك
-</h2>
-
-<p id="outDetails"
-style="margin-top:5px;color:#7d8ba7;">
-</p>
-
-<p id="roleText"
-style="
-margin-top:10px;
-font-weight:700;
-color:#25aae1;
-">
-</p>
-
+<h2 id="outName">مرحباً بك</h2>
+<p id="outDetails" style="color:#707EAE;margin-top:5px;"></p>
 </div>
 
-<button class="btn-login"
-style="width:auto;padding:12px 25px;">
+<div class="top-actions">
 
-تعديل الملف الشخصي
-
-</button>
-<div class="card">
-
-<h3 style="margin-bottom:20px;">
-إرسال البيانات للطبيب
-</h3>
-
-<div class="input-group">
-<label>العمر</label>
-<input type="number" id="patientAge">
+<div class="search-box">
+<i class="fas fa-search"></i>
+<input type="text" placeholder="ابحث هنا">
 </div>
 
-<div class="input-group">
-<label>الوزن</label>
-<input type="text" id="patientWeight">
-</div>
-
-<div class="input-group">
-<label>ضغط الدم</label>
-<input type="text" id="patientPressure">
-</div>
-
-<div class="input-group">
-<label>مستوى السكر</label>
-<input type="text" id="patientSugar">
-</div>
-
-<div class="input-group">
-<label>الأعراض</label>
-
-<input type="text"
-id="patientSymptoms">
-
-</div>
-
-<button class="btn-login"
-onclick="sendToDoctor()">
-
-إرسال البيانات
-
-</button>
-
-</div>
-</div>
-
-<div class="card">
-
-<h3 style="margin-bottom:20px;">
-الإشعارات الطبية
-</h3>
-
-<div class="notification warning">
-
+<div class="notification-btn" onclick="toggleNotifications(this)">
+<span class="dot"></span>
 <i class="fas fa-bell"></i>
-
-موعدك القادم بعد يومين مع طبيب القلب
-
+<div class="notif-panel" id="notifPanel">
+<div class="notif-item"><i class="fas fa-heartbeat"></i><div><b>تحديث نبض القلب</b><p>تم تسجيل قراءة جديدة اليوم</p></div></div>
+<div class="notif-item"><i class="fas fa-calendar-check"></i><div><b>تذكير بموعد</b><p>موعدك مع د. خالد العتيبي غداً</p></div></div>
+<div class="notif-item"><i class="fas fa-file-medical"></i><div><b>تقرير جديد</b><p>تمت إضافة تقرير الأشعة الأخير</p></div></div>
+</div>
 </div>
 
-<div class="notification success">
-
-<i class="fas fa-check-circle"></i>
-
-نتائج الفحوصات الأخيرة طبيعية
+<div class="notification-btn" onclick="toggleDarkMode()" title="الوضع الليلي">
+<i class="fas fa-moon"></i>
+</div>
 
 </div>
 
 </div>
 
 <div class="card">
-
-<h3 style="margin-bottom:20px;">
-تحليل الحالة الصحية
-</h3>
-
-<div style="
-display:flex;
-gap:30px;
-align-items:center;
-flex-wrap:wrap;
-">
-
-<div class="health-circle">
-78%
+    <h3 style="margin-top: 0;">إدخال وتحديث بيانات المريض الحالية</h3>
+    <p style="color: var(--gray); margin-bottom: 15px;">الرجاء كتابة قراءات المريض الحالية لتحديث التوأم الرقمي:</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 15px;">
+        <div class="input-group" style="margin-bottom: 0;" id="grp-formBpm">
+            <label>نبض القلب (BPM)</label>
+            <input type="number" id="formBpm" value="74" min="30" max="220">
+        </div>
+        <div class="input-group" style="margin-bottom: 0;" id="grp-formBp">
+            <label>ضغط الدم</label>
+            <input type="text" id="formBp" value="120/80" placeholder="120/80">
+        </div>
+        <div class="input-group" style="margin-bottom: 0;" id="grp-formO2">
+            <label>نسبة الأكسجين (%)</label>
+            <input type="number" id="formO2" value="98" min="50" max="100">
+        </div>
+        <div class="input-group" style="margin-bottom: 0;" id="grp-formSleep">
+            <label>عدد ساعات النوم</label>
+            <input type="number" id="formSleep" value="7.5" min="0" max="24" step="0.5">
+        </div>
+        <div class="input-group" style="margin-bottom: 0;" id="grp-formScore">
+            <label>نسبة الصحة (Score %)</label>
+            <input type="number" id="formScore" value="89" min="0" max="100">
+        </div>
+    </div>
+    <button class="btn-login" style="width: auto; padding: 12px 30px;" onclick="saveFormVitals()"><i class="fas fa-floppy-disk"></i> حفظ البيانات وتحديث اللوحة</button>
 </div>
 
-<div style="flex:1;min-width:250px;">
-
-<p style="margin-bottom:10px;">
-النشاط البدني
-</p>
-
-<div style="
-height:12px;
-background:#edf2ff;
-border-radius:30px;
-overflow:hidden;
-margin-bottom:20px;
-">
-
-<div style="
-width:80%;
-height:100%;
-background:#05CD99;
-">
+<div class="health-score">
+<div>
+<h2>AI Health Score</h2>
+<p>تحليل ذكي للحالة الصحية الحالية</p>
 </div>
-
-</div>
-
-<p style="margin-bottom:10px;">
-جودة النوم
-</p>
-
-<div style="
-height:12px;
-background:#edf2ff;
-border-radius:30px;
-overflow:hidden;
-margin-bottom:20px;
-">
-
-<div style="
-width:65%;
-height:100%;
-background:#ffb547;
-">
-</div>
-
-</div>
-
-<p style="margin-bottom:10px;">
-النظام الغذائي
-</p>
-
-<div style="
-height:12px;
-background:#edf2ff;
-border-radius:30px;
-overflow:hidden;
-">
-
-<div style="
-width:90%;
-height:100%;
-background:#4318FF;
-">
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+<div class="health-circle" id="cardScore">89%</div>
 </div>
 
 <div class="stat-grid">
 
-<div class="card" style="text-align:center;">
+<div class="card card-center">
+<span class="icon-badge" style="color:#EF4444;background:rgba(239,68,68,.12);"><i class="fas fa-heart"></i></span>
+<h2 id="cardBpm">74 BPM</h2>
+<p>نبض القلب</p>
+</div>
 
-<i class="fas fa-heart"
-style="font-size:35px;color:#ff4d4d;"></i>
+<div class="card card-center">
+<span class="icon-badge" style="color:#0b3b91;background:rgba(11,59,145,.1);"><i class="fas fa-tint"></i></span>
+<h2 id="cardBp">120/80</h2>
+<p>ضغط الدم</p>
+</div>
 
-<h2 style="margin:15px 0;">
-74
-</h2>
+<div class="card card-center">
+<span class="icon-badge" style="color:#05CD99;background:rgba(5,205,153,.12);"><i class="fas fa-lungs"></i></span>
+<h2 id="cardO2">98%</h2>
+<p>الأكسجين</p>
+</div>
 
-<p>
-نبض القلب
-</p>
+<div class="card card-center">
+<span class="icon-badge" style="color:#8B5CF6;background:rgba(139,92,246,.12);"><i class="fas fa-bed"></i></span>
+<h2 id="cardSleep">7.5h</h2>
+<p>النوم</p>
+</div>
 
 </div>
 
-<div class="card" style="text-align:center;">
-
-<i class="fas fa-tint"
-style="font-size:35px;color:#0b3b91;"></i>
-
-<h2 style="margin:15px 0;">
-120/80
-</h2>
-
-<p>
-ضغط الدم
-</p>
-
+<div class="card trend-card">
+<h3>اتجاه نبض القلب (آخر القراءات)</h3>
+<p style="color:var(--gray);font-size:13px;margin-bottom:6px;">يتم رسم هذا المخطط تلقائياً من القراءات التي تحفظها</p>
+<canvas id="trendChart"></canvas>
+<div class="trend-legend"><span>أقل قراءة: <b id="trendMin">--</b></span><span>أعلى قراءة: <b id="trendMax">--</b></span><span>آخر قراءة: <b id="trendLast">--</b></span></div>
 </div>
 
-<div class="card" style="text-align:center;">
+<h3>الأهداف الصحية</h3>
 
-<i class="fas fa-lungs"
-style="font-size:35px;color:#05CD99;"></i>
+<div class="stat-grid">
 
-<h2 style="margin:15px 0;">
-98%
-</h2>
-
-<p>
-الأكسجين
-</p>
-
-</div>
-
+<div class="card">
+<h4>النشاط اليومي</h4>
+<p style="margin-top:15px;">7500 / 10000 خطوة</p>
+<div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div>
 </div>
 
 <div class="card">
-
-<h3 style="margin-bottom:20px;">
-AI Prediction
-</h3>
-
-<p style="
-font-size:18px;
-line-height:2;
-font-weight:700;
-color:#05CD99;
-">
-
-بناءً على بياناتك الحالية،
-يتوقع النظام تحسن حالتك الصحية خلال 30 يوم.
-
-</p>
-
+<h4>شرب الماء</h4>
+<p style="margin-top:15px;">5 / 8 أكواب</p>
+<div class="progress-bar"><div class="progress-fill" style="width:62%;"></div></div>
 </div>
-
-<h3 style="margin-bottom:20px;">
-الخدمات الطبية
-</h3>
-
-<div class="services-grid">
-
-<div class="service-box">
-
-<i class="fas fa-file-medical-alt"
-style="color:#0b3b91;"></i>
-
-<b>
-التقارير
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-x-ray"
-style="color:#05CD99;"></i>
-
-<b>
-الأشعة
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-microscope"
-style="color:#ff4d4d;"></i>
-
-<b>
-الفحوصات
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-calendar-check"
-style="color:#4318FF;"></i>
-
-<b>
-المواعيد
-</b>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- DOCTOR -->
-
-<div id="section-doctor"
-class="dashboard-section">
-
-<h2 style="margin-bottom:20px;">
-جدول مواعيد الأطباء
-</h2>
 
 <div class="card">
+<h4>النوم</h4>
+<p style="margin-top:15px;">6 / 8 ساعات</p>
+<div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div>
+</div>
 
+</div>
+
+<h3>المواعيد القادمة</h3>
+
+<div class="card" style="overflow-x:auto;">
 <table>
-
-<tr>
-<th>الطبيب</th>
-<th>المريض</th>
-<th>التخصص</th>
-<th>الوقت</th>
-</tr>
-
-<tr>
-<td>د. خالد العتيبي</td>
-<td>محمد علي</td>
-<td>الأسنان</td>
-<td>10:00 AM</td>
-</tr>
-
-<tr>
-<td>د. سارة الأحمد</td>
-<td>ريم عبدالله</td>
-<td>القلب</td>
-<td>11:30 AM</td>
-</tr>
-
-<tr>
-<td>د. أحمد القحطاني</td>
-<td>عبدالله حسن</td>
-<td>العظام</td>
-<td>2:00 PM</td>
-</tr>
-
+<tr><th>الطبيب</th><th>التخصص</th><th>التاريخ</th><th>الحالة</th></tr>
+<tr><td>د. خالد العتيبي</td><td>القلب</td><td>18 مارس 2026</td><td style="color:#05CD99;">مؤكد</td></tr>
+<tr><td>د. سارة الأحمد</td><td>العظام</td><td>22 مارس 2026</td><td style="color:#F59E0B;">بانتظار</td></tr>
+<tr><td>د. أحمد القحطاني</td><td>الأعصاب</td><td>25 مارس 2026</td><td style="color:#EF4444;">عاجل</td></tr>
 </table>
-
-<div class="card">
-
-<h3 style="margin-bottom:20px;">
-بيانات المريض
-</h3>
-
-<p>
-<b>العمر:</b>
-<span id="docAge">
-—
-</span>
-</p>
-
-<br>
-
-<p>
-<b>الوزن:</b>
-<span id="docWeight">
-—
-</span>
-</p>
-
-<br>
-
-<p>
-<b>ضغط الدم:</b>
-<span id="docPressure">
-—
-</span>
-</p>
-
-<br>
-
-<p>
-<b>السكر:</b>
-<span id="docSugar">
-—
-</span>
-</p>
-
-<br>
-
-<p>
-<b>الأعراض:</b>
-<span id="docSymptoms">
-—
-</span>
-</p>
-
-<hr style="margin:25px 0;">
-
-<div class="input-group">
-
-<label>
-تشخيص الطبيب
-</label>
-
-<input type="text"
-id="doctorDiagnosis">
-
 </div>
 
-<div class="input-group">
-
-<label>
-العلاج
-</label>
-
-<input type="text"
-id="doctorMedicine">
-
-</div>
-
-<button class="btn-login"
-onclick="saveDiagnosis()">
-
-حفظ التشخيص
-
-</button>
-
-</div>
-</div>
-
-<div class="card">
-
-<h3 style="margin-bottom:20px;">
-صلاحيات الطبيب
-</h3>
+<h3>الخدمات الطبية</h3>
 
 <div class="services-grid">
-
-<div class="service-box">
-
-<i class="fas fa-user-injured"
-style="color:#0b3b91;"></i>
-
-<b>
-إدارة المرضى
-</b>
-
+<div class="service-box" onclick="showToast('سيتم فتح صفحة التقارير قريباً','info')"><i class="fas fa-file-medical-alt" style="color:#0b3b91;"></i><b>التقارير</b></div>
+<div class="service-box" onclick="showToast('سيتم فتح صفحة الأشعة قريباً','info')"><i class="fas fa-x-ray" style="color:#05CD99;"></i><b>الأشعة</b></div>
+<div class="service-box" onclick="showToast('سيتم فتح رفع الملفات قريباً','info')"><i class="fas fa-file-upload" style="color:#0EA5E9;"></i><b>رفع الملفات</b></div>
+<div class="service-box" onclick="showToast('سيتم فتح الاستشارة الطبية قريباً','info')"><i class="fas fa-comment-medical" style="color:#F97316;"></i><b>استشارة طبية</b></div>
 </div>
 
-<div class="service-box">
+<h3 style="margin-top:30px;">النشاط الأخير</h3>
 
-<i class="fas fa-notes-medical"
-style="color:#05CD99;"></i>
-
-<b>
-التشخيص الطبي
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-pills"
-style="color:#ff4d4d;"></i>
-
-<b>
-الوصفات الطبية
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-calendar-plus"
-style="color:#4318FF;"></i>
-
-<b>
-إدارة المواعيد
-</b>
-
+<div class="card" id="patientTimeline">
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-heartbeat"></i></div><div><h4>تحديث نبض القلب</h4><p style="color:gray;">تم تسجيل 74 BPM اليوم</p></div></div>
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-calendar-check"></i></div><div><h4>تم تأكيد الموعد</h4><p style="color:gray;">موعد القلب بتاريخ 18 مارس</p></div></div>
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-file-medical"></i></div><div><h4>تم رفع تقرير طبي</h4><p style="color:gray;">تم إضافة تقرير الأشعة الجديد</p></div></div>
 </div>
 
 </div>
 
+<div id="section-doctor" class="dashboard-section">
+
+<div class="top-bar">
+<div>
+<h2>لوحة الطبيب</h2>
+<p style="color:#707EAE;">إدارة المرضى والمتابعة الطبية</p>
+</div>
+<div class="top-actions">
+<div class="notification-btn"><span class="dot"></span><i class="fas fa-bell"></i></div>
+<div class="notification-btn"><i class="fas fa-calendar"></i></div>
+</div>
 </div>
 
-</div>
-
-<!-- ADMIN -->
-
-<div id="section-admin"
-class="dashboard-section">
-
-<h2 style="margin-bottom:20px;">
-إحصائيات النظام
-</h2>
+<div class="alert-box"><b>تنبيه طبي:</b> يوجد 4 مرضى بحاجة لمتابعة عاجلة اليوم.</div>
 
 <div class="stat-grid">
-
-<div class="card" style="text-align:center;">
-
-<i class="fas fa-users"
-style="font-size:35px;color:#0b3b91;"></i>
-
-<h1 style="margin:15px 0;">
-1,247
-</h1>
-
-<p>
-إجمالي المرضى
-</p>
-
+<div class="card card-center"><span class="icon-badge" style="color:#0b3b91;background:rgba(11,59,145,.1);"><i class="fas fa-user-injured"></i></span><h2 id="docPatientCount">32</h2><p>عدد المرضى</p></div>
+<div class="card card-center"><span class="icon-badge" style="color:#05CD99;background:rgba(5,205,153,.12);"><i class="fas fa-file-medical"></i></span><h2>18</h2><p>تقارير جديدة</p></div>
+<div class="card card-center"><span class="icon-badge" style="color:#EF4444;background:rgba(239,68,68,.12);"><i class="fas fa-stethoscope"></i></span><h2>7</h2><p>حالات حرجة</p></div>
+<div class="card card-center"><span class="icon-badge" style="color:#8B5CF6;background:rgba(139,92,246,.12);"><i class="fas fa-calendar-check"></i></span><h2>14</h2><p>مواعيد اليوم</p></div>
 </div>
 
-<div class="card" style="text-align:center;">
-
-<i class="fas fa-user-md"
-style="font-size:35px;color:#ff4d4d;"></i>
-
-<h1 style="margin:15px 0;">
-38
-</h1>
-
-<p>
-عدد الأطباء
-</p>
-
-</div>
-
-<div class="card" style="text-align:center;">
-
-<i class="fas fa-chart-line"
-style="font-size:35px;color:#05CD99;"></i>
-
-<h1 style="margin:15px 0;">
-99.8%
-</h1>
-
-<p>
-كفاءة النظام
-</p>
-
-</div>
-
+<div class="card" style="overflow-x:auto;">
+<h3>جدول المواعيد</h3>
+<table>
+<tr><th>المريض</th><th>التخصص</th><th>الوقت</th><th>الحالة</th></tr>
+<tr><td>محمد علي</td><td>القلب</td><td>10:00 AM</td><td style="color:#05CD99;">مؤكد</td></tr>
+<tr><td>ريم عبدالله</td><td>العظام</td><td>11:30 AM</td><td style="color:#F59E0B;">بانتظار</td></tr>
+<tr><td>عبدالله حسن</td><td>الأعصاب</td><td>2:00 PM</td><td style="color:#EF4444;">عاجل</td></tr>
+</table>
 </div>
 
 <div class="card">
-
-<h3 style="margin-bottom:20px;">
-لوحة تحكم الإدارة
-</h3>
+<h3>تنبيهات المرضى</h3>
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-heart"></i></div><div><h4>ارتفاع ضغط الدم</h4><p style="color:gray;">المريض محمد علي بحاجة لمتابعة</p></div></div>
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-notes-medical"></i></div><div><h4>إضافة تقرير جديد</h4><p style="color:gray;">تم رفع تقرير أشعة جديد</p></div></div>
+</div>
 
 <div class="services-grid">
-
-<div class="service-box">
-
-<i class="fas fa-users-cog"
-style="color:#0b3b91;"></i>
-
-<b>
-إدارة المستخدمين
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-hospital-user"
-style="color:#05CD99;"></i>
-
-<b>
-إدارة الأطباء
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-shield-alt"
-style="color:#ff4d4d;"></i>
-
-<b>
-الصلاحيات
-</b>
-
-</div>
-
-<div class="service-box">
-
-<i class="fas fa-database"
-style="color:#4318FF;"></i>
-
-<b>
-قاعدة البيانات
-</b>
-
+<div class="service-box" onclick="showToast('سيتم فتح الاجتماع المرئي قريباً','info')"><i class="fas fa-video" style="color:#EF4444;"></i><b>اجتماع فيديو</b></div>
+<div class="service-box" onclick="showToast('سيتم فتح الرسائل قريباً','info')"><i class="fas fa-comment-medical" style="color:#05CD99;"></i><b>الرسائل</b></div>
+<div class="service-box" onclick="showToast('سيتم فتح التحليلات قريباً','info')"><i class="fas fa-chart-line" style="color:#8B5CF6;"></i><b>التحليلات</b></div>
 </div>
 
 </div>
 
+<div id="section-admin" class="dashboard-section">
+
+<div class="top-bar">
+<div>
+<h2>لوحة المدير</h2>
+<p style="color:#707EAE;">إدارة النظام والتحليلات العامة</p>
+</div>
+<div class="top-actions">
+<div class="notification-btn"><span class="dot"></span><i class="fas fa-bell"></i></div>
+<div class="notification-btn"><i class="fas fa-cog"></i></div>
+</div>
+</div>
+
+<div class="stat-grid">
+<div class="card card-center"><span class="icon-badge" style="color:#0b3b91;background:rgba(11,59,145,.1);"><i class="fas fa-users"></i></span><h2 id="adminPatientCount">1,247</h2><p>إجمالي المرضى</p></div>
+<div class="card card-center"><span class="icon-badge" style="color:#05CD99;background:rgba(5,205,153,.12);"><i class="fas fa-user-md"></i></span><h2 id="adminDoctorCount">38</h2><p>عدد الأطباء</p></div>
+<div class="card card-center"><span class="icon-badge" style="color:#EF4444;background:rgba(239,68,68,.12);"><i class="fas fa-server"></i></span><h2>99.8%</h2><p>كفاءة النظام</p></div>
+<div class="card card-center"><span class="icon-badge" style="color:#8B5CF6;background:rgba(139,92,246,.12);"><i class="fas fa-calendar"></i></span><h2>245</h2><p>المواعيد اليوم</p></div>
+</div>
+
+<div class="card" style="overflow-x:auto;">
+<h3>مراقبة النظام</h3>
+<table>
+<tr><th>الخدمة</th><th>الحالة</th><th>آخر تحديث</th></tr>
+<tr><td>قاعدة البيانات</td><td style="color:#05CD99;">متصل</td><td>قبل دقيقة</td></tr>
+<tr><td>الخادم الرئيسي</td><td style="color:#05CD99;">يعمل</td><td>الآن</td></tr>
+<tr><td>الإشعارات</td><td style="color:#F59E0B;">ضغط مرتفع</td><td>قبل 5 دقائق</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>إدارة المستخدمين</h3>
+<p style="color:var(--gray);margin-bottom:15px;">قائمة الحسابات المسجلة في النظام حالياً — يمكنك تفعيل أو إيقاف أي حساب</p>
+<div style="overflow-x:auto;">
+<table id="adminUsersTable">
+<tr><th>الاسم</th><th>البريد الإلكتروني</th><th>نوع الحساب</th><th>الحالة</th><th>إجراء</th></tr>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>آخر نشاطات المستخدمين</h3>
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-user"></i></div><div><h4>تسجيل دخول جديد</h4><p style="color:gray;">تم تسجيل دخول مريض جديد قبل 3 دقائق</p></div></div>
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-user-md"></i></div><div><h4>إضافة تقرير طبي</h4><p style="color:gray;">تم رفع تقرير جديد بواسطة الطبيب</p></div></div>
+<div class="timeline-item"><div class="timeline-icon"><i class="fas fa-shield-alt"></i></div><div><h4>تحديث أمني</h4><p style="color:gray;">تم تحديث إعدادات الأمان</p></div></div>
+</div>
+
+<div class="services-grid">
+<div class="service-box" onclick="document.getElementById('adminUsersTable').scrollIntoView({behavior:'smooth'})"><i class="fas fa-users-cog" style="color:#0b3b91;"></i><b>إدارة المستخدمين</b></div>
+<div class="service-box" onclick="showToast('تم بدء عملية النسخ الاحتياطي','success')"><i class="fas fa-database" style="color:#05CD99;"></i><b>النسخ الاحتياطي</b></div>
+<div class="service-box" onclick="showToast('سيتم فتح Analytics قريباً','info')"><i class="fas fa-chart-pie" style="color:#8B5CF6;"></i><b>Analytics</b></div>
+<div class="service-box" onclick="showToast('سيتم فتح إعدادات الأمان قريباً','info')"><i class="fas fa-shield-alt" style="color:#EF4444;"></i><b>الأمان</b></div>
+<div class="service-box" onclick="showToast('لا توجد إشعارات جديدة','info')"><i class="fas fa-bell" style="color:#F97316;"></i><b>الإشعارات</b></div>
+<div class="service-box" onclick="toggleDarkMode()"><i class="fas fa-cogs" style="color:#0EA5E9;"></i><b>الإعدادات</b></div>
 </div>
 
 </div>
@@ -1248,349 +1285,502 @@ style="color:#4318FF;"></i>
 
 <script>
 
-function showBox(id){
+/* =========================================================
+   Digital Twin Health - Application Logic
+   نموذج أولي (Prototype) يستخدم localStorage لمحاكاة قاعدة
+   بيانات مستخدمين متعددة، سجل قراءات صحي، وصلاحيات أدوار.
+   ========================================================= */
 
-document.querySelectorAll('.auth-box')
-.forEach(box=>{
+const USERS_KEY   = 'dth_users';
+const SESSION_KEY = 'dth_session';
+const VITALS_KEY_PREFIX   = 'dth_vitals_';
+const HISTORY_KEY_PREFIX  = 'dth_history_';
 
-box.classList.remove('active');
+/* ---------- Helpers: users store ---------- */
 
-});
-
-document.getElementById(id)
-.classList.add('active');
-
+function getUsers(){
+    try{ return JSON.parse(localStorage.getItem(USERS_KEY)) || []; }
+    catch(e){ return []; }
 }
 
-/* REGISTER */
+function saveUsers(users){ localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+
+function findUserByEmail(email){
+    return getUsers().find(u => u.email.toLowerCase() === email.toLowerCase());
+}
+
+function seedDefaultUsers(){
+    if(getUsers().length > 0) return;
+    const defaults = [
+        { name:'سارة أحمد', email:'patient@twin.com', password:'12345', role:'patient', status:'active', createdAt:new Date().toISOString() },
+        { name:'د. خالد العتيبي', email:'doctor@twin.com', password:'12345', role:'doctor', status:'active', createdAt:new Date().toISOString() },
+        { name:'مدير النظام', email:'admin@twin.com', password:'12345', role:'admin', status:'active', createdAt:new Date().toISOString() }
+    ];
+    saveUsers(defaults);
+}
+
+/* ---------- Helpers: UI feedback ---------- */
+
+function showError(elId, message){ const el=document.getElementById(elId); if(!el) return; el.style.display='block'; el.innerHTML=message; }
+function hideError(elId){ const el=document.getElementById(elId); if(el) el.style.display='none'; }
+function showSuccess(elId, message){ const el=document.getElementById(elId); if(!el) return; el.style.display='block'; el.innerHTML=message; }
+function markInvalid(groupId, isInvalid){ const el=document.getElementById(groupId); if(!el) return; el.classList.toggle('invalid', !!isInvalid); }
+
+function showToast(message, type){
+    const container = document.getElementById('toast-container');
+    if(!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast' + (type==='error' ? ' toast-error' : type==='success' ? ' toast-success' : '');
+    toast.innerText = message;
+    container.appendChild(toast);
+    setTimeout(() => { toast.style.opacity='0'; toast.style.transition='.3s'; setTimeout(()=>toast.remove(),300); }, 3000);
+}
+
+function togglePassword(inputId, iconEl){
+    const input = document.getElementById(inputId);
+    const isPw = input.type === 'password';
+    input.type = isPw ? 'text' : 'password';
+    iconEl.classList.toggle('fa-eye', !isPw);
+    iconEl.classList.toggle('fa-eye-slash', isPw);
+}
+
+function toggleNotifications(btn){
+    const panel = document.getElementById('notifPanel');
+    if(!panel) return;
+    panel.classList.toggle('open');
+    // إغلاق اللوحة عند الضغط خارجها
+    document.addEventListener('click', function closeOnce(e){
+        if(!btn.contains(e.target)){
+            panel.classList.remove('open');
+            document.removeEventListener('click', closeOnce);
+        }
+    });
+}
+
+/* ---------- Validation ---------- */
+
+const NAME_REGEX  = /^[\u0621-\u064Aa-zA-Z\s]{3,60}$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateName(name){ return NAME_REGEX.test(name.trim()); }
+function validateEmail(email){ return EMAIL_REGEX.test(email.trim()); }
+
+/* ---------- Page load ---------- */
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    seedDefaultUsers();
+
+    const hint = document.getElementById('loginHint');
+    if(hint){
+        hint.innerHTML =
+            'حسابات تجريبية للاختبار:<br>' +
+            '• مريض: patient@twin.com / 12345<br>' +
+            '• طبيب: doctor@twin.com / 12345<br>' +
+            '• مدير: admin@twin.com / 12345';
+    }
+
+    if(localStorage.getItem('dth_dark_mode') === '1'){
+        document.body.classList.add('dark-mode');
+    }
+
+    const session = localStorage.getItem(SESSION_KEY);
+    if(session){
+        const user = findUserByEmail(session);
+        if(user){ enterApp(user); return; }
+        localStorage.removeItem(SESSION_KEY);
+    }
+});
+
+/* ---------- Auth box switching ---------- */
+
+function showBox(id){
+    document.querySelectorAll('.auth-box').forEach(box => box.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    ['registerError','loginError','forgotError','forgotSuccess'].forEach(hideError);
+}
+
+/* ---------- Register ---------- */
 
 function registerUser(){
 
-let name =
-document.getElementById('regName').value;
+    hideError('registerError');
 
-let email =
-document.getElementById('regEmail').value;
+    const name     = document.getElementById('regName').value.trim();
+    const email    = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirm  = document.getElementById('regConfirm').value;
+    const role     = document.getElementById('regRole').value;
 
-let password =
-document.getElementById('regPassword').value;
+    ['grp-regName','grp-regEmail','grp-regPassword','grp-regConfirm'].forEach(g => markInvalid(g, false));
 
-let confirm =
-document.getElementById('regConfirm').value;
+    if(name==='' || email==='' || password==='' || confirm===''){
+        showError('registerError', 'الرجاء تعبئة جميع الحقول');
+        [name===''&&'grp-regName', email===''&&'grp-regEmail', password===''&&'grp-regPassword', confirm===''&&'grp-regConfirm']
+            .filter(Boolean).forEach(g => markInvalid(g, true));
+        return;
+    }
 
-let role =
-document.getElementById('regRole').value;
+    if(!validateName(name)){
+        showError('registerError', 'الاسم يجب أن يحتوي على حروف فقط (3 أحرف على الأقل)');
+        markInvalid('grp-regName', true);
+        return;
+    }
 
-if(name==="" ||
-email==="" ||
-password==="" ||
-confirm===""){
+    if(!validateEmail(email)){
+        showError('registerError', 'صيغة البريد الإلكتروني غير صحيحة');
+        markInvalid('grp-regEmail', true);
+        return;
+    }
 
-document.getElementById('registerError')
-.style.display='block';
+    if(password.length < 6){
+        showError('registerError', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+        markInvalid('grp-regPassword', true);
+        return;
+    }
 
-document.getElementById('registerError')
-.innerHTML='الرجاء تعبئة جميع الحقول';
+    if(password !== confirm){
+        showError('registerError', 'كلمتا المرور غير متطابقتين');
+        markInvalid('grp-regConfirm', true);
+        return;
+    }
 
-return;
+    if(findUserByEmail(email)){
+        showError('registerError', 'هذا البريد الإلكتروني مسجل مسبقاً، الرجاء تسجيل الدخول');
+        markInvalid('grp-regEmail', true);
+        return;
+    }
 
+    const users = getUsers();
+    users.push({ name, email, password, role, status:'active', createdAt: new Date().toISOString() });
+    saveUsers(users);
+
+    showToast('تم إنشاء الحساب بنجاح، يمكنك تسجيل الدخول الآن', 'success');
+
+    document.getElementById('loginEmail').value = email;
+    document.getElementById('loginRole').value  = role;
+
+    showBox('loginBox');
 }
 
-if(password !== confirm){
-
-document.getElementById('registerError')
-.style.display='block';
-
-document.getElementById('registerError')
-.innerHTML='كلمتا المرور غير متطابقتين';
-
-return;
-
-}
-
-localStorage.setItem('name',name);
-
-localStorage.setItem('email',email);
-
-localStorage.setItem('password',password);
-
-localStorage.setItem('role',role);
-
-alert('تم إنشاء الحساب بنجاح');
-
-showBox('loginBox');
-
-}
-
-/* LOGIN */
+/* ---------- Login ---------- */
 
 function loginUser(){
 
-let email =
-document.getElementById('loginEmail').value;
+    hideError('loginError');
 
-let password =
-document.getElementById('loginPassword').value;
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const role     = document.getElementById('loginRole').value;
 
-let savedEmail =
-localStorage.getItem('email');
+    ['grp-loginEmail','grp-loginPassword'].forEach(g => markInvalid(g, false));
 
-let savedPassword =
-localStorage.getItem('password');
+    if(email==='' || password===''){
+        showError('loginError', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور');
+        return;
+    }
 
-let savedName =
-localStorage.getItem('name');
+    const user = findUserByEmail(email);
 
-let savedRole =
-localStorage.getItem('role');
+    if(!user || user.password !== password){
+        showError('loginError', 'البريد الإلكتروني أو كلمة المرور غير صحيحة');
+        markInvalid('grp-loginEmail', true);
+        markInvalid('grp-loginPassword', true);
+        return;
+    }
 
-if(email===savedEmail &&
-password===savedPassword){
+    if(user.role !== role){
+        showError('loginError', 'نوع الحساب المحدد لا يطابق نوع هذا الحساب (' + roleLabel(user.role) + ')');
+        return;
+    }
 
-document.getElementById('login-page')
-.style.display='none';
+    if(user.status === 'inactive'){
+        showError('loginError', 'هذا الحساب موقوف حالياً من قبل الإدارة، الرجاء التواصل مع الدعم');
+        return;
+    }
 
-document.getElementById('app-interface')
-.style.display='flex';
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارِ الدخول...';
 
-document.getElementById('outName')
-.innerText='مرحباً بك، ' + savedName;
-
-document.getElementById('outDetails')
-.innerText='البريد الإلكتروني: ' + savedEmail;
-
-document.getElementById('roleText')
-.innerText='نوع الحساب: ' + savedRole;
-
-
-/* إرسال بيانات المريض */
-
-function sendToDoctor(){
-
-let age =
-document.getElementById('patientAge').value;
-
-let weight =
-document.getElementById('patientWeight').value;
-
-let pressure =
-document.getElementById('patientPressure').value;
-
-let sugar =
-document.getElementById('patientSugar').value;
-
-let symptoms =
-document.getElementById('patientSymptoms').value;
-
-localStorage.setItem('age',age);
-
-localStorage.setItem('weight',weight);
-
-localStorage.setItem('pressure',pressure);
-
-localStorage.setItem('sugar',sugar);
-
-localStorage.setItem('symptoms',symptoms);
-
-alert('تم إرسال البيانات للطبيب');
-
+    setTimeout(() => {
+        localStorage.setItem(SESSION_KEY, user.email);
+        enterApp(user);
+    }, 400);
 }
 
-/* تحميل بيانات الطبيب */
+function roleLabel(role){ return role==='patient' ? 'مريض' : role==='doctor' ? 'طبيب' : 'مدير'; }
 
-function loadDoctorData(){
+/* ---------- Enter application ---------- */
 
-document.getElementById('docAge')
-.innerText =
-localStorage.getItem('age') || '-';
+function enterApp(user){
 
-document.getElementById('docWeight')
-.innerText =
-localStorage.getItem('weight') || '-';
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('app-interface').style.display = 'flex';
 
-document.getElementById('docPressure')
-.innerText =
-localStorage.getItem('pressure') || '-';
+    document.getElementById('outName').innerText = 'مرحباً بك، ' + user.name;
+    document.getElementById('outDetails').innerText = 'البريد الإلكتروني: ' + user.email;
 
-document.getElementById('docSugar')
-.innerText =
-localStorage.getItem('sugar') || '-';
+    document.getElementById('btn-p').style.display = 'flex';
+    document.getElementById('btn-d').style.display = 'flex';
+    document.getElementById('btn-a').style.display = 'flex';
 
-document.getElementById('docSymptoms')
-.innerText =
-localStorage.getItem('symptoms') || '-';
-
+    if(user.role === 'patient'){
+        show('patient');
+        document.getElementById('btn-d').style.display = 'none';
+        document.getElementById('btn-a').style.display = 'none';
+        restoreVitals(user.email);
+        drawTrend(user.email);
+    }else if(user.role === 'doctor'){
+        show('doctor');
+        document.getElementById('btn-p').style.display = 'none';
+        document.getElementById('btn-a').style.display = 'none';
+        updateDoctorStats();
+    }else if(user.role === 'admin'){
+        show('admin');
+        document.getElementById('btn-p').style.display = 'none';
+        document.getElementById('btn-d').style.display = 'none';
+        updateAdminStats();
+    }
 }
 
-/* حفظ التشخيص */
-
-function saveDiagnosis(){
-
-let diagnosis =
-document.getElementById('doctorDiagnosis').value;
-
-let medicine =
-document.getElementById('doctorMedicine').value;
-
-localStorage.setItem(
-'diagnosis',
-diagnosis
-);
-
-localStorage.setItem(
-'medicine',
-medicine
-);
-
-alert('تم حفظ التشخيص');
-
-}
-/* الصلاحيات */
-
-if(savedRole === 'patient'){
-
-show('patient');
-
-document.getElementById('btn-d')
-.style.display='none';
-
-document.getElementById('btn-a')
-.style.display='none';
-
+function logoutUser(){
+    localStorage.removeItem(SESSION_KEY);
+    location.reload();
 }
 
-else if(savedRole === 'doctor'){
-
-show('doctor');
-
-document.getElementById('btn-p')
-.style.display='none';
-
-document.getElementById('btn-a')
-.style.display='none';
-
-}
-
-else if(savedRole === 'admin'){
-
-show('admin');
-
-}
-
-}else{
-
-document.getElementById('loginError')
-.style.display='block';
-
-document.getElementById('loginError')
-.innerHTML=
-'البريد الإلكتروني أو كلمة المرور غير صحيحة';
-
-}
-
-}
-
-/* FORGOT PASSWORD */
+/* ---------- Forgot password ---------- */
 
 function forgotPassword(){
+    hideError('forgotError');
+    hideError('forgotSuccess');
 
-let email =
-document.getElementById('forgotEmail').value;
+    const email = document.getElementById('forgotEmail').value.trim();
 
-let savedEmail =
-localStorage.getItem('email');
+    if(email===''){ showError('forgotError', 'أدخل البريد الإلكتروني'); return; }
 
-if(email===""){
+    const user = findUserByEmail(email);
+    if(!user){ showError('forgotError', 'هذا البريد الإلكتروني غير مسجل في النظام'); return; }
 
-alert('أدخل البريد الإلكتروني');
-
-return;
-
+    showSuccess('forgotSuccess', 'تم إرسال رابط استعادة كلمة المرور إلى: ' + email);
+    setTimeout(() => showBox('loginBox'), 1500);
 }
 
-if(email !== savedEmail){
-
-alert('البريد الإلكتروني غير موجود');
-
-return;
-
-}
-
-alert(
-'تم إرسال رابط استعادة كلمة المرور إلى: '
-+ email);
-
-showBox('loginBox');
-
-}
-
-/* SHOW SECTIONS */
+/* ---------- Dashboard navigation ---------- */
 
 function show(id){
-
-let role =
-localStorage.getItem('role');
-
-if(role === 'patient' &&
-id !== 'patient'){
-
-return;
-
+    document.querySelectorAll('.dashboard-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+    document.getElementById('btn-' + (id==='patient'?'p':id==='doctor'?'d':'a')).classList.add('active');
 }
 
-if(role === 'doctor' &&
-id !== 'doctor'){
-
-return;
-
-}
-
-document.querySelectorAll('.dashboard-section')
-.forEach(s=>{
-
-s.classList.remove('active');
-
-});
-
-document.querySelectorAll('.sidebar-item')
-.forEach(i=>{
-
-i.classList.remove('active');
-
-});
-
-document.getElementById('section-' + id)
-.classList.add('active');
-
-document.getElementById(
-'btn-' +
-(id==='patient'
-? 'p'
-: id==='doctor'
-? 'd'
-: 'a')
-).classList.add('active');
-
-}
-
-/* DARK MODE */
+/* ---------- Dark mode ---------- */
 
 function toggleDarkMode(){
-
-document.body.classList.toggle('dark');
-
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('dth_dark_mode', document.body.classList.contains('dark-mode') ? '1' : '0');
 }
 
-/* LOGOUT */
+/* ---------- Patient vitals form ---------- */
 
-function logout(){
+function saveFormVitals(){
 
-location.reload();
+    ['grp-formBpm','grp-formBp','grp-formO2','grp-formSleep','grp-formScore'].forEach(g => markInvalid(g, false));
 
+    const bpm   = document.getElementById('formBpm').value.trim();
+    const bp    = document.getElementById('formBp').value.trim();
+    const o2    = document.getElementById('formO2').value.trim();
+    const sleep = document.getElementById('formSleep').value.trim();
+    const score = document.getElementById('formScore').value.trim();
+
+    let hasError = false;
+
+    if(bpm==='' || Number(bpm)<30 || Number(bpm)>220){ markInvalid('grp-formBpm', true); hasError = true; }
+    if(!/^\d{2,3}\/\d{2,3}$/.test(bp)){ markInvalid('grp-formBp', true); hasError = true; }
+    if(o2==='' || Number(o2)<50 || Number(o2)>100){ markInvalid('grp-formO2', true); hasError = true; }
+    if(sleep==='' || Number(sleep)<0 || Number(sleep)>24){ markInvalid('grp-formSleep', true); hasError = true; }
+    if(score==='' || Number(score)<0 || Number(score)>100){ markInvalid('grp-formScore', true); hasError = true; }
+
+    if(hasError){ showToast('الرجاء إدخال قيم صحيحة ضمن المدى المسموح', 'error'); return; }
+
+    document.getElementById('cardBpm').innerText   = bpm + ' BPM';
+    document.getElementById('cardBp').innerText    = bp;
+    document.getElementById('cardO2').innerText    = o2 + '%';
+    document.getElementById('cardSleep').innerText = sleep + 'h';
+    document.getElementById('cardScore').innerText = score + '%';
+
+    const vitals = { bpm, bp, o2, sleep, score, updatedAt: new Date().toLocaleString('ar-SA') };
+
+    const session = localStorage.getItem(SESSION_KEY);
+    if(session){
+        localStorage.setItem(VITALS_KEY_PREFIX + session, JSON.stringify(vitals));
+        pushHistory(session, Number(bpm));
+        drawTrend(session);
+    }
+
+    addTimelineEntry('تحديث القراءات الصحية', 'تم تحديث نبض القلب إلى ' + bpm + ' BPM وباقي القراءات');
+    showToast('تم حفظ قراءات المريض وتحديث التوأم الرقمي بنجاح', 'success');
+}
+
+function restoreVitals(email){
+    const raw = localStorage.getItem(VITALS_KEY_PREFIX + email);
+    if(!raw) return;
+    try{
+        const v = JSON.parse(raw);
+        document.getElementById('formBpm').value   = v.bpm;
+        document.getElementById('formBp').value    = v.bp;
+        document.getElementById('formO2').value    = v.o2;
+        document.getElementById('formSleep').value = v.sleep;
+        document.getElementById('formScore').value = v.score;
+
+        document.getElementById('cardBpm').innerText   = v.bpm + ' BPM';
+        document.getElementById('cardBp').innerText    = v.bp;
+        document.getElementById('cardO2').innerText    = v.o2 + '%';
+        document.getElementById('cardSleep').innerText = v.sleep + 'h';
+        document.getElementById('cardScore').innerText = v.score + '%';
+    }catch(e){ /* ignore corrupted data */ }
+}
+
+function addTimelineEntry(title, description){
+    const timeline = document.getElementById('patientTimeline');
+    if(!timeline) return;
+    const item = document.createElement('div');
+    item.className = 'timeline-item';
+    item.innerHTML =
+        '<div class="timeline-icon"><i class="fas fa-heartbeat"></i></div>' +
+        '<div><h4>' + title + '</h4><p style="color:gray;">' + description + '</p></div>';
+    timeline.insertBefore(item, timeline.firstChild);
+}
+
+/* ---------- Heart-rate history + trend chart ---------- */
+
+function pushHistory(email, bpmValue){
+    let history = [];
+    try{ history = JSON.parse(localStorage.getItem(HISTORY_KEY_PREFIX + email)) || []; }catch(e){ history = []; }
+    history.push(bpmValue);
+    if(history.length > 10) history = history.slice(history.length - 10);
+    localStorage.setItem(HISTORY_KEY_PREFIX + email, JSON.stringify(history));
+}
+
+function drawTrend(email){
+    const canvas = document.getElementById('trendChart');
+    if(!canvas) return;
+
+    let history = [];
+    try{ history = JSON.parse(localStorage.getItem(HISTORY_KEY_PREFIX + email)) || []; }catch(e){ history = []; }
+
+    if(history.length === 0){
+        const currentBpm = Number(document.getElementById('formBpm').value) || 74;
+        history = [currentBpm];
+    }
+
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = 120 * dpr;
+
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, rect.width, 120);
+
+    const min = Math.min(...history) - 5;
+    const max = Math.max(...history) + 5;
+    const w = rect.width;
+    const h = 100;
+    const padTop = 10;
+
+    const points = history.map((v, i) => {
+        const x = history.length === 1 ? w/2 : (i/(history.length-1)) * w;
+        const y = padTop + h - ((v-min)/(max-min || 1)) * h;
+        return [x, y];
+    });
+
+    // خط متدرج
+    const grad = ctx.createLinearGradient(0,0,w,0);
+    grad.addColorStop(0, '#0b3b91');
+    grad.addColorStop(1, '#25aae1');
+
+    ctx.beginPath();
+    points.forEach(([x,y], i) => { i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); });
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 3;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    // نقاط
+    points.forEach(([x,y]) => {
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI*2);
+        ctx.fillStyle = '#25aae1';
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'white';
+        ctx.stroke();
+    });
+
+    const minEl = document.getElementById('trendMin');
+    const maxEl = document.getElementById('trendMax');
+    const lastEl = document.getElementById('trendLast');
+    if(minEl) minEl.innerText = Math.min(...history) + ' BPM';
+    if(maxEl) maxEl.innerText = Math.max(...history) + ' BPM';
+    if(lastEl) lastEl.innerText = history[history.length-1] + ' BPM';
+}
+
+/* ---------- Doctor / Admin stats derived from registered users ---------- */
+
+function updateDoctorStats(){
+    const users = getUsers();
+    const patientCount = users.filter(u => u.role === 'patient').length;
+    const el = document.getElementById('docPatientCount');
+    if(el) el.innerText = patientCount;
+}
+
+function updateAdminStats(){
+    const users = getUsers();
+    const patientCount = users.filter(u => u.role === 'patient').length;
+    const doctorCount  = users.filter(u => u.role === 'doctor').length;
+
+    const pEl = document.getElementById('adminPatientCount');
+    const dEl = document.getElementById('adminDoctorCount');
+    if(pEl) pEl.innerText = patientCount;
+    if(dEl) dEl.innerText = doctorCount;
+
+    renderUsersTable();
+}
+
+function renderUsersTable(){
+    const users = getUsers();
+    const table = document.getElementById('adminUsersTable');
+    if(!table) return;
+
+    table.innerHTML = '<tr><th>الاسم</th><th>البريد الإلكتروني</th><th>نوع الحساب</th><th>الحالة</th><th>إجراء</th></tr>';
+
+    users.forEach(u => {
+        const status = u.status || 'active';
+        const row = document.createElement('tr');
+        row.innerHTML =
+            '<td>' + u.name + '</td>' +
+            '<td>' + u.email + '</td>' +
+            '<td>' + roleLabel(u.role) + '</td>' +
+            '<td><span class="badge ' + (status==='active' ? 'badge-active' : 'badge-inactive') + '">' + (status==='active' ? 'نشط' : 'موقوف') + '</span></td>' +
+            '<td><button class="mini-btn" onclick="toggleUserStatus(\'' + u.email + '\')">' + (status==='active' ? 'إيقاف' : 'تفعيل') + '</button></td>';
+        table.appendChild(row);
+    });
+}
+
+function toggleUserStatus(email){
+    const users = getUsers();
+    const user = users.find(u => u.email === email);
+    if(!user) return;
+
+    user.status = (user.status === 'active') ? 'inactive' : 'active';
+    saveUsers(users);
+    renderUsersTable();
+    showToast('تم ' + (user.status==='active' ? 'تفعيل' : 'إيقاف') + ' حساب ' + user.name, 'success');
 }
 
 </script>
-
 </body>
-
 </html>
